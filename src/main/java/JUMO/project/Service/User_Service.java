@@ -1,0 +1,42 @@
+package JUMO.project.Service;
+
+import JUMO.project.Entity.User;
+import JUMO.project.Repository.User_Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class User_Service implements UserDetailsService {
+
+    private final User_Repository user_repository;
+
+    @Autowired
+    public User_Service(User_Repository user_repository){
+        this.user_repository=user_repository;
+    }
+
+    //회원가입
+    public User Signup(User user){
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+
+        //Id 중복 확인
+        if(user_repository.findbyId(user.getId()).isEmpty()){
+            user_repository.save(user);
+            return user;
+        }
+        return null;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return user_repository.findbyId(username)
+                .orElseThrow(()->new UsernameNotFoundException(username));
+    }
+}
