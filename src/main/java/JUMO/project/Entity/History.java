@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @Table(name="history")
+@Embeddable
 public class History {
+    @Id
+    @Column(name="id")
+    private long id;
     @Column(name="uid",nullable = false)
     private long uid;
     @Column(name="code",nullable = false)
