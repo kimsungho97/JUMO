@@ -34,6 +34,20 @@ public class User_Service implements UserDetailsService {
         return null;
     }
 
+    //로그인
+    public boolean login(User user){
+        BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+
+        if(!user_repository.findbyId(user.getId()).isEmpty()){
+            User result=user_repository.findbyId(user.getId()).get();
+            if(result.getPassword().equals(user.getPassword())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return user_repository.findbyId(username)

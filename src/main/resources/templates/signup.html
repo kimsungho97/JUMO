@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <style>
 body{
 -webkit-text-size-adjust: 100%;
@@ -20,20 +21,11 @@ padding-bottom: 40px;
 
 background-color: #eee;
 }
-p {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.form-signin {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-}
-
+    .subject{
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+    }
 
 
 .btn-group-lg>.btn, .btn-lg {
@@ -67,12 +59,11 @@ p {
     transition: all .15s ease-in-out;
 
 }
-
 </style>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">Sign in</h2>
+    <form class="form-user" method="post" action="/signup">
+        <h2 class="form-user-heading">회원가입</h2>
         <p>
             <label for="username" class="sr-only">Username</label>
             <input type="text" id="username" name="id" class="form-control" placeholder="Username" required="" autofocus="">
@@ -83,7 +74,7 @@ p {
         </p>
         <input name="_csrf" type="hidden" value="4ecca41d-07af-44e7-ad3e-0807fae96676">
         <div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         </div>
     </form>
 </div>

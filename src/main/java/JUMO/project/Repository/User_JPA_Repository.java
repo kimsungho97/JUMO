@@ -28,7 +28,7 @@ public class User_JPA_Repository implements User_Repository{
     @Override
     public Optional<User> findbyId(String id) {
         List<User> user=entityManager
-                .createQuery("SELECT u FROM user u WHERE u.id=:id")
+                .createQuery("SELECT u FROM User u WHERE u.id=:id",User.class)
                 .setParameter("id",id)
                 .getResultList();
 

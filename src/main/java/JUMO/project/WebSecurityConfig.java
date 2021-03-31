@@ -1,3 +1,5 @@
+package JUMO.project;
+
 import JUMO.project.Service.User_Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -26,14 +28,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/login","/").permitAll()
+                //.anyRequest().authenticated()
                 .and()
                 .formLogin() // 7
                 .loginPage("/login") // 로그인 페이지 링크
                 .loginProcessingUrl("/login")
                 .usernameParameter("id")
                 .passwordParameter("password")
+                .defaultSuccessUrl("/")
 
                 //.failureUrl("/login")
                 //.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
