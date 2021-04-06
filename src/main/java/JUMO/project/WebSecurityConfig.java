@@ -28,8 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login","/").permitAll()
-                //.anyRequest().authenticated()
+                .antMatchers("/login","/","signup").permitAll()
                 .and()
                 .formLogin() // 7
                 .loginPage("/login") // 로그인 페이지 링크

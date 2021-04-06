@@ -30,11 +30,14 @@ public class User implements UserDetails {
     @Column(name="password",nullable = false)
     private String password;
 
+    @Column(name="balance")
+    private long balance;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
-        roles.add(new SimpleGrantedAuthority("USER"));
+        roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         return roles;
     }
 

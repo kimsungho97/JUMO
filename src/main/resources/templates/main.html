@@ -2,10 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js">
+</script>
+
+
 <body>
 <div>
     <h2>로그인 정보</h2>
@@ -13,11 +19,21 @@
     <p>소유권한 : <span sec:authentication="authorities"></span><p>
 </div>
 <aside>
-    <div>
+
+    <div sec:authorize="hasRole('ANONYMOUS')">
         <a href="/login">로그인</a>
     </div>
-    <div>
+
+    <div sec:authorize="hasRole('ANONYMOUS')">
         <a href="/signup">회원가입</a>
+    </div>
+
+    <div sec:authorize="hasRole('USER')">
+        <a href="/userinfo">내정보</a>
+    </div>
+
+    <div sec:authorize="hasRole('USER')">
+        <a href="/logout">로그아웃</a>
     </div>
 </aside>
 </body>
