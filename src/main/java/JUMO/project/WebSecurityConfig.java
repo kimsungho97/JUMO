@@ -2,6 +2,7 @@ package JUMO.project;
 
 import JUMO.project.Service.User_Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
     private final User_Service user_service; // 3
+
+    private final CustomAuthFailureHandler customAuthFailureHandler;
 
     @Override
     public void configure(WebSecurity web) { // 4
@@ -36,12 +39,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .usernameParameter("id")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/")
+                .failureHandler(customAuthFailureHandler)
 
                 //.failureUrl("/login")
                 //.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
 
         ;
     }
+
+
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception { // 9
@@ -50,4 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 // loadUserByUsername() 구현해야함 (서비스 참고)
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+
+    @Bean
+    public CustomAuthFailureHandler authFailureHandler(){
+        return new CustomAuthFailureHandler();
+    }
 }
+
