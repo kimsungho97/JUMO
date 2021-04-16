@@ -5,6 +5,7 @@ import JUMO.project.Repository.User_Repository;
 import JUMO.project.Service.User_Service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -28,7 +29,6 @@ public class SpringConfig{
     public User_Repository user_repository(){
         return new User_JPA_Repository(entityManager);
     }
-
 
 
 }
