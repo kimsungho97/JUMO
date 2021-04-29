@@ -1,7 +1,9 @@
 package JUMO.project;
 
+import JUMO.project.Repository.Price_JPA_Repository;
 import JUMO.project.Repository.User_JPA_Repository;
 import JUMO.project.Repository.User_Repository;
+import JUMO.project.Service.Price_Service;
 import JUMO.project.Service.User_Service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,5 +32,13 @@ public class SpringConfig{
         return new User_JPA_Repository(entityManager);
     }
 
+    @Bean
+    public Price_JPA_Repository price_jpa_repository(){
+        return new Price_JPA_Repository(entityManager);
+    }
 
+    @Bean
+    public Price_Service price_service(){
+        return new Price_Service(price_jpa_repository());
+    }
 }

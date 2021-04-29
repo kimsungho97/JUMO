@@ -9,12 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.text.DecimalFormat;
 
 @RequiredArgsConstructor
 @Controller
@@ -50,7 +52,14 @@ public class Main_Controller {
     }
 
     @GetMapping("/userinfo")
-    public String user_info(){
+    public String user_info(Model model){
+        User user=(User)user_service.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        DecimalFormat format=new DecimalFormat("###,###");
+        String balance=format.format(user.getBalance());
+        model.addAttribute("user",user);
+        model.addAttribute("balance",balance);
         return "userinfo";
     }
+
+
 }

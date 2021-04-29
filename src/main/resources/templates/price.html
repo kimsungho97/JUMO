@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>시간</th>
+                <th>종목명</th>
+                <th>종목코드</th>
+                <th>고가</th>
+                <th>저가</th>
+                <th>시가</th>
+                <th>종가</th>
+                <th>거래량</th>
+                <th>몰라</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="price : ${price}">
+                <td th:text="${price.time}"></td>
+                <td th:text="${price.name}"></td>
+                <td th:text="${price.code}"></td>
+                <td th:text="${price.High}"></td>
+                <td th:text="${price.Low}"></td>
+                <td th:text="${price.open}"></td>
+                <td th:text="${price.close}"></td>
+                <td th:text="${price.Volume}"></td>
+                <td th:text="${price.adjclose}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

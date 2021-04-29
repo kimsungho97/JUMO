@@ -13,11 +13,6 @@
 
 
 <body>
-<div>
-    <h2>로그인 정보</h2>
-    <p>ID : <span sec:authentication="name"></span><p>
-    <p>소유권한 : <span sec:authentication="authorities"></span><p>
-</div>
 <aside>
 
     <div sec:authorize="hasRole('ANONYMOUS')">
