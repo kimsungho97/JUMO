@@ -30,6 +30,10 @@
     <div sec:authorize="hasRole('USER')">
         <a href="/logout">로그아웃</a>
     </div>
+    <div>
+        <a href="/price">주가 조회하기</a>
+        <span sec:authorize="hasRole('ANONYMOUS')">(로그인 필요)</span>
+    </div>
 </aside>
 </body>
 </html>
