@@ -6,8 +6,103 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
+<style>
+
+
+    nav{
+        margin: 0;
+        padding: 0;
+        color: #666;
+        font-family: "맑은 고딕", 돋움, tahoma;
+        font-size: 12px;
+        letter-spacing: -0.5px;
+        display: block;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid #d6d6d6;
+        background-color: #fff;
+    }
+    table{
+        width: 100%;
+        border: 1px solid #444444;
+    }
+    th, td{
+        border: 1px solid #444444;
+    }
+
+    .logo{
+        margin: 0;
+        padding: 0;
+        color: #666;
+        font-family: "맑은 고딕", 돋움, tahoma;
+        font-size: 12px;
+        letter-spacing: -0.5px;
+        display: block;
+        float: left;
+        margin-left: 24px;
+        height: 100%;
+    }
+
+    .container{
+        padding: 0;
+        color: #666;
+        font-family: "맑은 고딕", 돋움, tahoma;
+        font-size: 12px;
+        letter-spacing: -0.5px;
+        display: block;
+        width: 1180px;
+        box-sizing: border-box;
+        position: relative;
+        top: 80px;
+        margin: 0 auto 25px auto;
+    }
+    div, nav, aside, article, figure {
+        display: block;
+    }
+</style>
+
 <body>
+<nav>
+    <div class="logo">
+        <a href="/main">
+            Jumo
+        </a>
+    </div>
+    <br/>
+    <div>
+        <a href="/userinfo">
+            내정보
+        </a>
+    </div>
+    <div>
+        <a href="/logout">
+            로그아웃
+        </a>
+    </div >
+    <div>
+        <span sec:authentication="name"></span>님 감사합니다.
+    </div>
+</nav>
+
 <div class="container">
+    <div>
+        <p>검색</p>
+        <form action="/search" method="post">
+            <div>
+                <label>종목명: </label>
+                <input type="text" name="name" placeholder="종목명 입력">
+                <label>종목코드: </label>
+                <input type="text" name="code" placeholder="종목코드 입력">
+                <button type="submit">검색</button>
+            </div>
+        </form>
+
+    </div>
     <div>
         <table>
             <thead>

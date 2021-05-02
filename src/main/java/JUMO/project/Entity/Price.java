@@ -1,13 +1,16 @@
 package JUMO.project.Entity;
 
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Embeddable
@@ -31,7 +34,7 @@ class pricePK implements Serializable{
     }
 }
 
-
+@NoArgsConstructor
 @Entity
 @Getter
 @Setter
@@ -60,5 +63,14 @@ public class Price {
     private long Volume;
 
     @Column(name="AdjClose")
-    private long adjclose;
+    private Long adjclose;
+
+
+    public String getName(){
+        return this.getId().getName();
+    }
+
+    public LocalDateTime getTime(){
+        return this.getId().getTime();
+    }
 }

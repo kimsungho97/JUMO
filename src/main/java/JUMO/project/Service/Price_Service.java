@@ -1,20 +1,21 @@
 package JUMO.project.Service;
 
 import JUMO.project.Entity.Price;
-import JUMO.project.Repository.Price_JPA_Repository;
+import JUMO.project.Repository.Price_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+
 @Transactional
+@Service
 public class Price_Service {
-    private final Price_JPA_Repository price_service;
+    private final Price_Repository price_service;
 
     @Autowired
-    public Price_Service(Price_JPA_Repository price_service) {
+    public Price_Service(Price_Repository price_service) {
         this.price_service = price_service;
     }
 

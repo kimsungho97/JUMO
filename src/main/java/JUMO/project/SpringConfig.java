@@ -33,12 +33,14 @@ public class SpringConfig{
     }
 
     @Bean
-    public Price_JPA_Repository price_jpa_repository(){
-        return new Price_JPA_Repository(entityManager);
+    public Price_Service price_service(){
+        return new Price_Service(price_repository());
     }
 
     @Bean
-    public Price_Service price_service(){
-        return new Price_Service(price_jpa_repository());
+    public Price_JPA_Repository price_repository(){
+        return new Price_JPA_Repository(entityManager);
     }
+
+
 }
