@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 @Transactional
@@ -29,5 +32,12 @@ public class Price_Service {
 
     public List<Price> findBycode(String code){
         return price_service.findBycode(code);
+    }
+
+    public HashMap<String,String> allStock_name(String name) {
+        return price_service.allStock_name(name);
+    }
+    public HashMap<String,String> allStock_code(String code) {
+        return price_service.allStock_code(code);
     }
 }
