@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.RequestScope;
 
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
+
+import static java.time.ZoneOffset.UTC;
 
 @Getter
 @Setter
@@ -60,43 +64,26 @@ public class Price_Controller {
     @GetMapping("/chart")
     public String chart(@RequestParam String stock, ModelMap model){
         ArrayList<Price> prices= (ArrayList<Price>) price_service.findByname(stock);
-        String time[]=new String[10];
-        int data[][]= new int[10][5];
+        Collections.sort(prices);
+        long data[][]= new long[prices.size()][8];
         int index=0;
+        String stock_name=prices.get(0).getName();
         for(Price p: prices){
-            time[index]=p.getTime().toString();
-            data[index][0]= (int) p.getLow();
-            data[index][1]= (int) p.getOpen();
-            data[index][2]= (int) ((p.getOpen()+p.getClose())/2);
-            data[index][3]= (int) p.getClose();
-            data[index][4]= (int) p.getHigh();
+            data[index][0]= p.getTime().getYear();
+            data[index][1]= p.getTime().getMonthValue();
+            data[index][2]= p.getTime().getDayOfMonth();
+            data[index][3]= p.getOpen();
+            data[index][4]= p.getHigh();
+            data[index][5]= p.getLow();
+            data[index][6]= p.getClose();
+            data[index][7]=p.getVolume();
             index++;
-            if(index>=10) break;
         }
-        model.addAttribute("category",time);
+        model.addAttribute("stock_name",stock_name);
         model.addAttribute("prices",data);
         return "chart";
     }
 
-    @PostMapping("/chart")
-    public String chart_search(Price_Search price_search, ModelMap model){
-        System.out.println("name: "+price_search.getName()+", code:"+price_search.getCode());
-        if(price_search.getCode().length()==0 && price_search.getName().length()==0){
-            return "chart";
-        }
-        if(price_search.getCode().length()==0){
-            //Price price[]= price_service.findByname(price_search.getName()).toArray();
-            //model.addAttribute("price",price);
-            return "chart";
-        }
-
-        else if(price_search.getName().length()==0){
-            Price price[]= (Price[])  price_service.findBycode(price_search.getCode()).toArray();
-            model.addAttribute("price",price);
-            return "chart";
-        }
-        return "chart";
-    }
 
     @GetMapping("/stock_list")
     public String stock_list(@RequestParam @Nullable String name, @RequestParam @Nullable String code, ModelMap model){

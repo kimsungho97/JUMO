@@ -40,7 +40,7 @@ class pricePK implements Serializable{
 @Setter
 @Table(name="price")
 @Embeddable
-public class Price {
+public class Price implements Comparable<Price>{
     @EmbeddedId
     private pricePK id;
 
@@ -72,5 +72,10 @@ public class Price {
 
     public LocalDateTime getTime(){
         return this.getId().getTime();
+    }
+
+    @Override
+    public int compareTo(Price other) {
+        return this.getTime().compareTo(other.getTime());
     }
 }
