@@ -14,14 +14,16 @@
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/login.css">
 </head>
-<style>
 
-
-</style>
 <body>
 <div class="container">
     <form class="form-signin" method="post" action="/login">
-        <h2 class="form-signin-heading">JUMO</h2>
+        <a href="/">
+            <h2 class="form-signin-heading">JUMO</h2>
+        </a>
+        <h3 class="notice-what-doing">
+            로그인
+        </h3>
         <p>
             <label for="username" class="sr-only"></label>
             <input type="text" id="username" name="id" class="form-control" placeholder="아이디" required="" autofocus="">
@@ -32,7 +34,7 @@
         </p>
         <input name="_csrf" type="hidden" value="4ecca41d-07af-44e7-ad3e-0807fae96676">
         <div >
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style='cursor:pointer;'>로그인</button>
         </div>
     </form>
 </div>

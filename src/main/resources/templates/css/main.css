@@ -229,11 +229,13 @@ header .sub-menu ul.menu li a:hover {
     margin: auto;
     transition: background-color 0.3s;
     color: white;
+    text-shadow: #000 1px 1px 1px;
 }
 
 .view-chart .image-container .sub-info .btn:hover{
     background-color: #f4f5f8;
     color: #333;
+    text-shadow: none;
 }
 .view-chart .image-container .sub-info .btn span{
     font-size: 14px;
