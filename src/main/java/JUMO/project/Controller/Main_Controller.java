@@ -3,10 +3,7 @@ package JUMO.project.Controller;
 import JUMO.project.Entity.User;
 import JUMO.project.Service.User_Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.text.DecimalFormat;
 
 @RequiredArgsConstructor
@@ -26,7 +22,7 @@ public class Main_Controller {
 
     @GetMapping(value="/")
     public String main(){
-        return "main";
+        return "index";
     }
 
     @GetMapping(value="/login")

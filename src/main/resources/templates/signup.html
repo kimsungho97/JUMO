@@ -1,80 +1,40 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JUMO 회원가입</title>
+
+    <link rel="icon" href="./images/logo2.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/signup.css">
 </head>
 
-<style>
-body{
--webkit-text-size-adjust: 100%;
--webkit-tap-highlight-color: transparent;
-box-sizing: inherit;
-margin: 0;
-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-font-size: 1rem;
-font-weight: 400;
-line-height: 1.5;
-color: #212529;
-padding-top: 40px;
-padding-bottom: 40px;
-
-background-color: #eee;
-}
-    .subject{
-        max-width: 330px;
-        padding: 15px;
-        margin: 0 auto;
-    }
-
-
-.btn-group-lg>.btn, .btn-lg {
-    padding: .5rem 1rem;
-    font-size: 1.25rem;
-    line-height: 1.5;
-    border-radius: .5rem;
-}
-.btn-primary {
-    color: #fff;
-    background-color: #008400;
-    border-color: #008400;
-}
-
-.btn {
-    display: inline-block;
-    font-weight: 400;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border: 1px solid transparent;
-    padding: .5rem .75rem;
-    font-size: 1rem;
-    line-height: 1.25;
-    border-radius: .25rem;
-    transition: all .15s ease-in-out;
-
-}
-</style>
 <body>
 <div class="container">
     <form class="form-user" method="post" action="/signup">
-        <h2 class="form-user-heading">회원가입</h2>
+        <a href="/">
+            <h2 class="form-user-heading">JUMO</h2>    
+        </a>
+        <h3 class="notice-what-doing">
+            회원가입
+        </h3>
         <p>
-            <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="id" class="form-control" placeholder="Username" required="" autofocus="">
+            <label for="username" class="sr-only"></label>
+            <input type="text" id="username" name="id" class="form-control" placeholder="아이디" required="" autofocus="">
         </p>
         <p>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
+            <label for="password" class="sr-only"></label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required="">
         </p>
         <input name="_csrf" type="hidden" value="4ecca41d-07af-44e7-ad3e-0807fae96676">
         <div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" style='cursor:pointer;' >가입하기</button>
         </div>
     </form>
 </div>
