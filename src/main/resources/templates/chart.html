@@ -6,123 +6,63 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      xmlns:th="http://www.w3.org/1999/xhtml">
-
-<style>
-
-</style>
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      lang="ko">
 
 
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+<link th:href="@{/css/chart.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="./css/chart.css">
+
+
 <body>
-<div id="container" style="height: 400px; min-width: 310px"></div>
+<header>
+  <div class="inner">
+    <a href="/" class="logo">
+      <img src="./images/JUMO_logo.png" alt="JUMO">
+    </a>
+
+    <div class="sub-menu">
+      <ul class="menu">
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/login">로그인</a>
+        </li>
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/signup">회원가입</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/userinfo">내정보</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/logout">로그아웃</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</header>
+<div class="upper-empty"></div>
+<div class="inner">
+  <div class="chart-title" >
+    <label class="chart-title-lbl" th:text="${stock_name}"></label>
+    <label class="chart-title-lbl" th:text="${stock_code}"></label>
+  </div>
+
+  <div class="chart-view" id="container" style="height: 400px; min-width: 310px"></div>
+</div>
 </body>
 
 <script th:inline="javascript">
+  data=[[${prices}]]
+</script>
 
-    Highcharts.setOptions({
-      global:{
-        useUTC: false
-        }
-      });
-
-    data=[[${prices}]]
-
-    // split the data set into ohlc and volume
-    var ohlc = [],
-        volume = [],
-        dataLength = data.length,
-        // set the allowed units for data grouping
-        groupingUnits = [[
-            'week',                         // unit name
-            [1]                             // allowed multiples
-        ], [
-            'month',
-            [1, 2, 3, 4, 6]
-        ]],
-
-        i = 0;
-
-    for (i; i < dataLength; i += 1) {
-        ohlc.push([
-            Date.UTC(data[i][0],data[i][1],data[i][2],9), // the date
-            data[i][3], // open
-            data[i][4], // high
-            data[i][5], // low
-            data[i][6] // close
-        ]);
-
-        volume.push([
-            Date.UTC(data[i][0],data[i][1],data[i][2],9), // the date
-            data[i][7] // the volume
-        ]);
-    }
-
-
-    // create the chart
-    Highcharts.stockChart('container', {
-
-        rangeSelector: {
-            selected: 1
-        },
-
-        title: {
-            text: '[[${stock_name}]]'
-        },
-
-        yAxis: [{
-            labels: {
-                align: 'right',
-                x: -3
-            },
-            title: {
-                text: 'OHLC'
-            },
-            height: '60%',
-            lineWidth: 2,
-            resize: {
-                enabled: true
-            }
-        }, {
-            labels: {
-                align: 'right',
-                x: -3
-            },
-            title: {
-                text: 'Volume'
-            },
-            top: '65%',
-            height: '35%',
-            offset: 0,
-            lineWidth: 2
-        }],
-
-        tooltip: {
-            split: true
-        },
-
-        series: [{
-            type: 'candlestick',
-            name: '[[${stock_name}]]',
-            data: ohlc,
-            dataGrouping: {
-                units: groupingUnits
-            }
-        }, {
-            type: 'column',
-            name: 'Volume',
-            data: volume,
-            yAxis: 1,
-            dataGrouping: {
-                units: groupingUnits
-            }
-        }]
-    });
-
-    const searchEl = document.querySelector('.highcharts-credits');
-    searchEl.style.display = 'none';
+<script src="./scripts/chart.js">
 </script>
 

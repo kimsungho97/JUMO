@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
     @Override
     public void configure(WebSecurity web) { // 4
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**");
+        web.ignoring().antMatchers("/templates/css/**", "/js/**", "/img/**");
     }
 
     @Override

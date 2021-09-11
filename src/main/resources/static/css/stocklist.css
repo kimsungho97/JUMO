@@ -1,0 +1,58 @@
+@import url("./header.css");
+
+* {
+    border: 1px solid;
+}
+
+.search-bar{
+    margin-top:20px;
+    margin-left:20px;
+}
+
+
+.search-font{
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+
+
+.search-bar-lbl{
+    width: 50px;
+    height: 20px;
+    margin: 10px 7px 10px 10px;
+}
+
+.search-bar-form{
+    width: 80%;
+}
+
+table.stock-table{
+  margin-top: 10px;
+  margin-left: 30px;
+  border-collapse: collapse;
+  text-align: left;
+  line-height: 1.5;
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  margin : 20px 10px;
+}
+
+.stock-table-th{
+   width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #153d73;
+  border-bottom: 3px solid #369;
+  border-right: 1px solid #ccc;
+ }
+
+ .stock-table-data{
+    width: 150px;
+   padding: 10px;
+   vertical-align: top;
+   border-right: 1px solid #ccc;
+   border-bottom: 1px solid #ccc;
+ }

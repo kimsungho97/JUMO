@@ -1,40 +1,71 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      lang="ko">
+
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JUMO</title>
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+<link th:href="@{/css/stocklist.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="./css/stocklist.css">
 <body>
+<header>
+  <div class="inner">
+    <a href="/" class="logo">
+      <img src="./images/JUMO_logo.png" alt="JUMO">
+    </a>
+
+    <div class="sub-menu">
+      <ul class="menu">
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/login">로그인</a>
+        </li>
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/signup">회원가입</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/userinfo">내정보</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/logout">로그아웃</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</header>
+<div class="upper-empty"></div>
 
 <div>
-  <p>검색</p>
-  <form action="/stock_list" method="get">
-    <div>
-      <label>종목명: </label>
-      <input type="text" name="name" id="name" placeholder="종목명 입력">
-      <label>종목코드: </label>
-      <input type="text" name="code" id="code" placeholder="종목코드 입력">
-      <button type="submit">검색</button>
-    </div>
-  </form>
+  <div class="search-bar flex-row">
+    <label class="search-font search-bar-lbl search-bar-lbl-">검색</label>
+    <label class="search-font search-bar-lbl">종목명 </label>
+    <input class="search-font search-bar-input search-name" type="text" name="name" id="name" placeholder="종목명 입력">
+    <label class="search-font search-bar-lbl">종목코드 </label>
+    <input class="search-font search-bar-input search-code" type="text" name="code" id="code" placeholder="종목코드 입력">
+  </div>
 
-  <table>
+  <table class="stock-table">
 
-    <thead>
-    <tr>
-      <th>종목 명</th>
-      <th>종목 코드</th>
-    </tr>
-    </thead>
 
     <tbody>
-    <tr th:each="stock:${stocks}">
-      <td th:text="${stock.key}"></td>
-      <td th:text="${stock.value}"></td>
-      <td><a th:href="@{/chart(stock=${stock.key})}">차트보기</a></td>
+    <tr class="stock-table">
+      <th class="stock-table-th" colspan="1">종목 명</th>
+      <th class="stock-table-th" colspan="1">종목 코드</th>
+      <th class="stock-table-th"  colspan="1">차트</th>
+    </tr>
+
+    <tr class="stock-table stock-table-row" th:each="stock:${stocks}">
+      <td class="stock-table stock-table-data stock-key" th:text="${stock.key}"></td>
+      <td class="stock-table stock-table-data stock-value" th:text="${stock.value}"></td>
+      <td class="stock-table stock-table-data stock-chart-link"><a th:href="@{/chart(stock=${stock.key})}">차트보기</a></td>
     </tr>
     </tbody>
 
@@ -42,4 +73,7 @@
 </div>
 
 </body>
+
+<script src="./scripts/stocklist.js"></script>
+
 </html>

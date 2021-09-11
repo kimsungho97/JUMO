@@ -80,6 +80,7 @@ public class Price_Controller {
             index++;
         }
         model.addAttribute("stock_name",stock_name);
+        model.addAttribute("stock_code",prices.get(0).getCode());
         model.addAttribute("prices",data);
         return "chart";
     }
