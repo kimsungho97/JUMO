@@ -45,7 +45,6 @@
 
 <div>
   <div class="search-bar flex-row">
-    <label class="search-font search-bar-lbl search-bar-lbl-">검색</label>
     <label class="search-font search-bar-lbl">종목명 </label>
     <input class="search-font search-bar-input search-name" type="text" name="name" id="name" placeholder="종목명 입력">
     <label class="search-font search-bar-lbl">종목코드 </label>
@@ -65,7 +64,7 @@
     <tr class="stock-table stock-table-row" th:each="stock:${stocks}">
       <td class="stock-table stock-table-data stock-key" th:text="${stock.key}"></td>
       <td class="stock-table stock-table-data stock-value" th:text="${stock.value}"></td>
-      <td class="stock-table stock-table-data stock-chart-link"><a th:href="@{/chart(stock=${stock.key})}">차트보기</a></td>
+      <td class="stock-table stock-table-data stock-chart-link"><a class="chart-link" th:href="@{/chart(stock=${stock.key})}">차트보기</a></td>
     </tr>
     </tbody>
 

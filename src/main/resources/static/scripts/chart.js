@@ -82,7 +82,7 @@
 
         series: [{
             type: 'candlestick',
-            name: '[[${stock_name}]]',
+            name: '',
             data: ohlc,
             dataGrouping: {
                 units: groupingUnits
@@ -95,9 +95,34 @@
             dataGrouping: {
                 units: groupingUnits
             }
-        }]
+        },
+        {
+                    name: '',
+                    data: volume,
+                    tooltip: {
+                        valueDecimals: 2
+                    }}
+        ]
     });
 
     const searchEl = document.querySelector('.highcharts-credits');
     searchEl.style.display = 'none';
     document.querySelector(".highcharts-title").style.display='none';
+
+    //차크 캔들 색깔 변경
+    function candleColorChange(){
+        const candleDown=document.querySelectorAll(".highcharts-point-up");
+        const candleUp=document.querySelectorAll(".highcharts-point-down");
+
+        candleDown.forEach((value)=>{
+            value.style.fill="#ff3333";
+        })
+
+        candleUp.forEach((value)=>{
+            value.style.fill="#0000ff";
+        })
+    }
+
+    window.addEventListener("click",candleColorChange);
+
+    candleColorChange();
