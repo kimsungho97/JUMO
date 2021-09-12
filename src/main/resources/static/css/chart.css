@@ -101,24 +101,33 @@ header .sub-menu ul.menu li a:hover {
 
 .chart-title{
     display:flex;
-    flex-direction: column;
-    width:100%;
+    flex-direction: row;
+    width:80%;
     height: 40px;
     margin-top: 30px;
-    align-self: center center;
-    align-content: center center;
 
+}
+.chart-title > * {
+    padding: 0px 10px 0px 10px;
+}
+
+.chart-recommend{
+    width: 60px;
+    color: black;
+    border-radius: 9px;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 1000;
 }
 
 .chart-title-lbl{
-align-self: center center;
-    align-content: center center;
-
-        position: relative;
-        font-family: Arial, sans-serif;
-        letter-spacing: -1px;
-        font-size: 32px;
-        font-weight: 400;
+    align-self: center;
+    align-content: center;
+    position: relative;
+    font-family: Arial, sans-serif;
+    letter-spacing: -1px;
+    font-size: 32px;
+    font-weight: 400;
 }
 
 .chart-view{

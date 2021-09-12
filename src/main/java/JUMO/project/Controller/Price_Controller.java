@@ -2,6 +2,7 @@ package JUMO.project.Controller;
 
 import JUMO.project.Entity.Price;
 import JUMO.project.Entity.User;
+import JUMO.project.Service.PredictService;
 import JUMO.project.Service.Price_Service;
 import JUMO.project.Service.User_Service;
 import lombok.Getter;
@@ -42,15 +43,17 @@ class Price_Search{
 
 //@RequiredArgsConstructor
 @Controller
+@RequiredArgsConstructor
 public class Price_Controller {
     private final Price_Service price_service;
     private final User_Service user_service;
+    private final PredictService predictService;
 
-    @Autowired
-    public Price_Controller(Price_Service price_service, User_Service user_service){
-        this.price_service=price_service;
-        this.user_service=user_service;
-    }
+//    @Autowired
+//    public Price_Controller(Price_Service price_service, User_Service user_service){
+//        this.price_service=price_service;
+//        this.user_service=user_service;
+//    }
 
     @GetMapping("/price")
     public String price(Model model){
@@ -79,9 +82,12 @@ public class Price_Controller {
             data[index][7]=p.getVolume();
             index++;
         }
+        String recommend = predictService.getRecommend(stock);
+        System.out.println("recommend = " + recommend);
         model.addAttribute("stock_name",stock_name);
         model.addAttribute("stock_code",prices.get(0).getCode());
         model.addAttribute("prices",data);
+        model.addAttribute("recommend",recommend);
         return "chart";
     }
 

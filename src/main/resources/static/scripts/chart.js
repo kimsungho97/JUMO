@@ -98,7 +98,7 @@
         },
         {
                     name: '',
-                    data: volume,
+                    data: ohlc,
                     tooltip: {
                         valueDecimals: 2
                     }}
@@ -126,3 +126,12 @@
     window.addEventListener("click",candleColorChange);
 
     candleColorChange();
+
+    const recommendInfo=document.querySelector(".chart-recommend");
+
+    if(recommendInfo.innerHTML==="buy".toLocaleUpperCase()){
+        recommendInfo.style.backgroundColor="#FC9FA0";
+    }
+    else{
+        recommendInfo.style.backgroundColor="#A299FF";
+    }
