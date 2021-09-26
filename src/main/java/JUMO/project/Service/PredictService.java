@@ -1,6 +1,9 @@
 package JUMO.project.Service;
 
+import java.util.ArrayList;
+
 public interface PredictService {
 
-    public String getRecommend(String name);
+    public ArrayList<String> getRecommend(String name);
+
 }

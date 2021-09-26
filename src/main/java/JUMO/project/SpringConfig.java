@@ -8,6 +8,7 @@ import JUMO.project.Service.User_Service;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.servlet.config.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import javax.persistence.EntityManager;
 
 @Configuration
+@PropertySource("/predict.properties")
 public class SpringConfig{
 
     private EntityManager entityManager;

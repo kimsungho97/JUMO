@@ -82,12 +82,14 @@ public class Price_Controller {
             data[index][7]=p.getVolume();
             index++;
         }
-        String recommend = predictService.getRecommend(stock);
-        System.out.println("recommend = " + recommend);
-        model.addAttribute("stock_name",stock_name);
+        ArrayList<String> recommend = predictService.getRecommend(stock);
+        System.out.println("recommendShort = " + recommend.get(1));
+        System.out.println("recommendLong = " + recommend.get(0));
+        model.addAttribute("stock_name", stock_name);
         model.addAttribute("stock_code",prices.get(0).getCode());
         model.addAttribute("prices",data);
-        model.addAttribute("recommend",recommend);
+        model.addAttribute("recommend_Long",recommend.get(0));
+        model.addAttribute("recommend_Short",recommend.get(1));
         return "chart";
     }
 

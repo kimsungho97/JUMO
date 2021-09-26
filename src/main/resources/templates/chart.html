@@ -23,6 +23,9 @@
 
 
 <body>
+  <style>
+   
+    </style>
 <header>
   <div class="inner">
     <a href="/" class="logo">
@@ -49,13 +52,32 @@
   </div>
 </header>
 <div class="upper-empty"></div>
-<div class="inner">
-  <div class="chart-title" >
-    <label class="chart-title-lbl" th:text="${stock_name}"></label>
-    <label class="chart-title-lbl" th:text="${stock_code}"></label>
-    <div class="chart-recommend" th:text="${recommend}"></div>
+<div class="body inner">
+  <div class="chart-info">
+    <div class="chart-title flex-column" >
+      <label class="chart-title-lbl chart-title-name" th:text="${stock_name}"></label>
+      <label class="chart-title-lbl chart-title-code" th:text="${stock_code}"></label>
+      <div class="chart-recommend flex-row">
+      <span class="recommend-short">
+          Short Term Prediction
+      </span>
+        <label class="recommend-result" th:text="${recommend_Short}">
 
+        </label>
+      </div>
+
+      <div class="chart-recommend flex-row">
+      <span class="recommend-long">
+          Long Term Prediction
+      </span>
+        <label class="recommend-result" th:text="${recommend_Long}">
+
+        </label>
+      </div>
+
+    </div>
   </div>
+
 
 
 

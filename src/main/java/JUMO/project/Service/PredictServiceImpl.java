@@ -10,6 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 @Service
 public class PredictServiceImpl implements PredictService{
@@ -17,7 +18,7 @@ public class PredictServiceImpl implements PredictService{
     private final String predictURL = "http://127.0.0.1:5000";
 
     @Override
-    public String getRecommend(String name) {
+    public ArrayList<String> getRecommend(String name) {
         UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(predictURL + "/predict/recommendStock")
                 .queryParam("name", name)
                 .build(false);  // 인코딩 하지않음
@@ -31,6 +32,9 @@ public class PredictServiceImpl implements PredictService{
         RestTemplate template = new RestTemplate(factory);
         ResponseEntity<StockRow> response = template.exchange(
                 uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), StockRow.class);
-        return response.getBody().getIsFullmaesu();
+        ArrayList<String> retList = new ArrayList<>();
+        retList.add(response.getBody().getIsLongTermFullmaesu());
+        retList.add(response.getBody().getIsShortTermFullmaesu());
+        return retList;
     }
 }

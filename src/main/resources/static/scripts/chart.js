@@ -24,7 +24,7 @@
 
     for (i; i < dataLength; i += 1) {
         ohlc.push([
-            Date.UTC(data[i][0],data[i][1],data[i][2],9), // the date
+            Date.UTC(data[i][0],data[i][1]-1,data[i][2],9), // the date
             data[i][3], // open
             data[i][4], // high
             data[i][5], // low
@@ -32,7 +32,7 @@
         ]);
 
         volume.push([
-            Date.UTC(data[i][0],data[i][1],data[i][2],9), // the date
+            Date.UTC(data[i][0],data[i][1]-1,data[i][2],9), // the date
             data[i][7] // the volume
         ]);
     }
@@ -127,11 +127,15 @@
 
     candleColorChange();
 
-    const recommendInfo=document.querySelector(".chart-recommend");
+    const recommendInfo = document.querySelectorAll(".recommend-result");
+    const highChartBackground = document.querySelector(".highcharts-background");
+    highChartBackground.style.boxShadow = "1px 1px 8px #d5d6d6";
 
-    if(recommendInfo.innerHTML==="buy".toLocaleUpperCase()){
-        recommendInfo.style.backgroundColor="#FC9FA0";
+recommendInfo.forEach((value) => { 
+    if(value.innerHTML==="BUY"){
+        value.style.backgroundColor="#FC9FA0";
     }
     else{
-        recommendInfo.style.backgroundColor="#A299FF";
+        value.style.backgroundColor="#A299FF";
     }
+})    

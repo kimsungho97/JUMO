@@ -18,5 +18,6 @@ public class StockRow {
     private int day;
     private double macd;
     private double signalLine;
-    private String isFullmaesu;
+    private String isLongTermFullmaesu;
+    private String isShortTermFullmaesu;
 }
