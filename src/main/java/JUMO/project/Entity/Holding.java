@@ -5,40 +5,40 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
-@Table(name="holding")
 public class Holding {
     @Id
-    @Column(name="id")
-    private long id;
-    @Column(name="uid",nullable = false)
-    private long uid;
-    @Column(name="code",nullable = false)
-    private long code;
-    @Column(name="price",nullable = false)
-    private long price;
-    @Column(name="volume",nullable = false)
-    private long volume;
-    @CreatedDate
-    @Column(name="datetime",nullable = false, updatable = false)
-    private LocalDateTime datetime;
+    @Column(name="holding_id")
+    private Long id;
 
-    @Builder
-    public Holding(long uid, long code, long price, long volume){
-        this.uid=uid;
-        this.code=code;
-        this.price=price;
-        this.volume=volume;
-    }
+    @ManyToOne
+    @JoinColumn(name = "uid")
+    private User user;
 
+    @Column(nullable = false)
+    private Long stockId;
 
+    @Column(nullable = false)
+    private Long averagePrice;
+
+    @Column(nullable = false)
+    private Long volume;
+
+//    @CreatedDate
+//    @Column(name="datetime",nullable = false, updatable = false)
+//    private LocalDateTime datetime;
+
+//    @Builder
+//    public Holding(long uid, long code, long price, long volume){
+//        this.uid=uid;
+//        this.code=code;
+//        this.price=price;
+//        this.volume=volume;
+//    }
 
 }

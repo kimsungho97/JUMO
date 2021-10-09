@@ -29,7 +29,6 @@ p {
     font-size: 120px;
     font-weight: 700;
     color: royalblue;
-    
 }
 
 .form-user .notice-what-doing {
@@ -76,7 +75,7 @@ input#password {
     border-color: blue;
 }
     
-.btn {
+a, .btn {
     display: inline-block;
     font-weight: 400;
     text-align: center;
