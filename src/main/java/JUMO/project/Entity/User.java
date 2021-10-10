@@ -9,9 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @Entity
@@ -24,14 +22,19 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
-    @Column(name="id",nullable = false)
+    @Column(nullable = false)
     private String id;
 
-    @Column(name="password",nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name="balance")
     private long balance;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Holding> holdings = new ArrayList<>();
 
 
     @Override
