@@ -26,11 +26,11 @@ public class Price_Service {
         return price_service.findAll();
     }
 
-    public List<Price> findByname(String name){
+    public List<Price> findByName(String name){
         return price_service.findByname(name);
     }
 
-    public List<Price> findBycode(String code){
+    public List<Price> findByCode(String code){
         return price_service.findBycode(code);
     }
 

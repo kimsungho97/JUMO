@@ -17,11 +17,14 @@ public class Holding {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "uid")
+    @JoinColumn(name = "uid", nullable = false)
     private User user;
 
     @Column(nullable = false)
     private Long stockId;
+
+    @Column(nullable = false)
+    private String stockName;
 
     @Column(nullable = false)
     private Long averagePrice;

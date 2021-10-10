@@ -28,7 +28,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    private long balance;
+    private Long balance;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();

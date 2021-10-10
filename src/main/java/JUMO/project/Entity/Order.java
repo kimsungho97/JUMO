@@ -17,6 +17,8 @@ public class Order {
 
     private String stockId;
 
+    private String stockName;
+
     private Long eachPrice;
 
     private LocalDateTime orderDate;
