@@ -21,7 +21,7 @@ public class Holding {
     private User user;
 
     @Column(nullable = false)
-    private Long stockId;
+    private String stockId;
 
     @Column(nullable = false)
     private String stockName;
@@ -34,7 +34,7 @@ public class Holding {
     @Column(nullable = false)
     private Long volume;
 
-    public static Holding createHolding(User user, Long stockId, String stockName, Integer count){
+    public static Holding createHolding(User user, String stockId, String stockName, Integer count){
         Holding holding = new Holding();
         holding.user = user;
         holding.stockId = stockId;
