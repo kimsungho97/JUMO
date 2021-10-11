@@ -1,9 +1,12 @@
 package JUMO.project.Entity;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @Table(name = "orders")
 public class Order {
 
@@ -21,9 +24,24 @@ public class Order {
 
     private Long eachPrice;
 
+    private Integer count;
+
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
     private TradeType tradeType;
+
+    public static Order createOrder(User user, String stockId, Long eachPrice, Integer count){
+        Order order = new Order();
+        order.user = user;
+        order.stockId = stockId;
+        order.eachPrice = eachPrice;
+        order.count = count;
+        order.orderDate = LocalDateTime.now();
+        order.tradeType = TradeType.BUY;
+
+        user.getOrders().add(order);
+        return order;
+    }
 
 }

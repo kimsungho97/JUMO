@@ -1,5 +1,6 @@
 package JUMO.project.Service;
 
+import JUMO.project.Entity.Order;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -47,6 +50,10 @@ public class User_Service implements UserDetailsService {
         }
         return false;
     }
+
+//    public List<Order> findOrderList(Long uid) {
+//        user_repository
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

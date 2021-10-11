@@ -26,11 +26,24 @@ public class Holding {
     @Column(nullable = false)
     private String stockName;
 
+    private Integer count;
+
     @Column(nullable = false)
     private Long averagePrice;
 
     @Column(nullable = false)
     private Long volume;
+
+    public static Holding createHolding(User user, Long stockId, String stockName, Integer count){
+        Holding holding = new Holding();
+        holding.user = user;
+        holding.stockId = stockId;
+        holding.stockName = stockName;
+        holding.count = count;
+
+        user.getHoldings().add(holding);
+        return holding;
+    }
 
 //    @CreatedDate
 //    @Column(name="datetime",nullable = false, updatable = false)

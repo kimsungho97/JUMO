@@ -35,4 +35,10 @@ public class User_JPA_Repository implements User_Repository{
         return user.stream().findAny();
     }
 
+    @Override
+    public Optional<User> findByUid(Long uid) {
+        User user = entityManager.find(User.class, uid);
+        return Optional.of(user);
+    }
+
 }

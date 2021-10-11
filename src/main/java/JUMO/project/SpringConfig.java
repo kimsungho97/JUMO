@@ -26,15 +26,15 @@ public class SpringConfig{
         this.entityManager=entityManager;
     }
 
-    @Bean
-    public User_Service user_service(){
-        return new User_Service(user_repository());
-    }
+//    @Bean
+//    public User_Service user_service(){
+//        return new User_Service(user_repository());
+//    }
 
-    @Bean
-    public User_Repository user_repository(){
-        return new User_JPA_Repository(entityManager);
-    }
+//    @Bean
+//    public User_Repository user_repository(){
+//        return new User_JPA_Repository(entityManager);
+//    }
 
     @Bean
     public Price_Service price_service(){
