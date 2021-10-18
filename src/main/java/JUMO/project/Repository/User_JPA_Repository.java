@@ -26,13 +26,19 @@ public class User_JPA_Repository implements User_Repository{
     }
 
     @Override
-    public Optional<User> findbyId(String id) {
+    public Optional<User> findById(String id) {
         List<User> user=entityManager
                 .createQuery("SELECT u FROM User u WHERE u.id=:id",User.class)
                 .setParameter("id",id)
                 .getResultList();
 
         return user.stream().findAny();
+    }
+
+    @Override
+    public Optional<User> findByUid(Long uid) {
+        User user = entityManager.find(User.class, uid);
+        return Optional.of(user);
     }
 
 }

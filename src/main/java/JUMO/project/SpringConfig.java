@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import javax.persistence.EntityManager;
 
 @Configuration
-@PropertySource("/predict.properties")
+//@PropertySource("/predict.properties")
 public class SpringConfig{
 
     private EntityManager entityManager;
@@ -26,15 +26,15 @@ public class SpringConfig{
         this.entityManager=entityManager;
     }
 
-    @Bean
-    public User_Service user_service(){
-        return new User_Service(user_repository());
-    }
+//    @Bean
+//    public User_Service user_service(){
+//        return new User_Service(user_repository());
+//    }
 
-    @Bean
-    public User_Repository user_repository(){
-        return new User_JPA_Repository(entityManager);
-    }
+//    @Bean
+//    public User_Repository user_repository(){
+//        return new User_JPA_Repository(entityManager);
+//    }
 
     @Bean
     public Price_Service price_service(){
@@ -46,15 +46,15 @@ public class SpringConfig{
         return new Price_JPA_Repository(entityManager);
     }
 
-    @Bean(name = "system")
-    public PropertiesFactoryBean propertiesFactoryBean() throws Exception {
-        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        ClassPathResource classPathResource = new ClassPathResource("predict.properties");
-
-        propertiesFactoryBean.setLocation(classPathResource);
-
-        return propertiesFactoryBean;
-    }
+//    @Bean(name = "system")
+//    public PropertiesFactoryBean propertiesFactoryBean() throws Exception {
+//        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+//        ClassPathResource classPathResource = new ClassPathResource("predict.properties");
+//
+//        propertiesFactoryBean.setLocation(classPathResource);
+//
+//        return propertiesFactoryBean;
+//    }
 
 
 }

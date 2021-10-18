@@ -1,6 +1,5 @@
 package JUMO.project.Service;
 
-import JUMO.project.Entity.StockRow;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -8,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -30,9 +28,10 @@ public class PredictServiceImpl implements PredictService{
             factory.setConnectTimeout(5000); // api 호출 타임아웃
             factory.setReadTimeout(5000);   // api 읽기 타임아웃
 
+
             RestTemplate template = new RestTemplate(factory);
-            ResponseEntity<StockRow> response = template.exchange(
-                    uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), StockRow.class);
+            ResponseEntity<PredictionDTO> response = template.exchange(
+                    uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), PredictionDTO.class);
             ArrayList<String> retList = new ArrayList<>();
             retList.add(response.getBody().getIsLongTermFullmaesu());
             retList.add(response.getBody().getIsShortTermFullmaesu());

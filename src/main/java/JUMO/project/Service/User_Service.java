@@ -1,5 +1,6 @@
 package JUMO.project.Service;
 
+import JUMO.project.Entity.Order;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.User_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -27,7 +30,7 @@ public class User_Service implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
 
         //Id 중복 확인
-        if(user_repository.findbyId(user.getId()).isEmpty()){
+        if(user_repository.findById(user.getId()).isEmpty()){
             user_repository.save(user);
             return user;
         }
@@ -39,8 +42,8 @@ public class User_Service implements UserDetailsService {
         BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
 
-        if(!user_repository.findbyId(user.getId()).isEmpty()){
-            User result=user_repository.findbyId(user.getId()).get();
+        if(!user_repository.findById(user.getId()).isEmpty()){
+            User result=user_repository.findById(user.getId()).get();
             if(result.getPassword().equals(user.getPassword())){
                 return true;
             }
@@ -48,9 +51,13 @@ public class User_Service implements UserDetailsService {
         return false;
     }
 
+//    public List<Order> findOrderList(Long uid) {
+//        user_repository
+//    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return user_repository.findbyId(username)
+        return user_repository.findById(username)
                 .orElseThrow(()->new UsernameNotFoundException(username));
     }
 }

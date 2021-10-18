@@ -1,33 +1,23 @@
 package JUMO.project.Controller;
 
 import JUMO.project.Entity.Price;
-import JUMO.project.Entity.User;
 import JUMO.project.Service.PredictService;
 import JUMO.project.Service.Price_Service;
 import JUMO.project.Service.User_Service;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.RequestScope;
 
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import static java.time.ZoneOffset.UTC;
 
 @Getter
 @Setter
@@ -66,7 +56,7 @@ public class Price_Controller {
 
     @GetMapping("/chart")
     public String chart(@RequestParam String stock, ModelMap model){
-        ArrayList<Price> prices= (ArrayList<Price>) price_service.findByname(stock);
+        ArrayList<Price> prices= (ArrayList<Price>) price_service.findByName(stock);
         Collections.sort(prices);
         long data[][]= new long[prices.size()][8];
         int index=0;
@@ -124,12 +114,12 @@ public class Price_Controller {
             return "price";
         }
         else if(price_search.getCode().length()==0){
-            ArrayList<Price> price= (ArrayList<Price>) price_service.findByname(price_search.getName());
+            ArrayList<Price> price= (ArrayList<Price>) price_service.findByName(price_search.getName());
             model.addAttribute("price",price);
             return "price";
         }
         else if(price_search.getName().length()==0){
-            ArrayList<Price> price= (ArrayList<Price>) price_service.findBycode(price_search.getCode());
+            ArrayList<Price> price= (ArrayList<Price>) price_service.findByCode(price_search.getCode());
             model.addAttribute("price",price);
             return "price";
         }

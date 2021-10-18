@@ -1,4 +1,4 @@
-package JUMO.project.Entity;
+package JUMO.project.Service;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class StockRow {
+public class PredictionDTO {
 
     private String code;
     private String name;
