@@ -5,7 +5,7 @@ import JUMO.project.Entity.User;
 
 public interface OrderService {
 
-    void buyingOrder(Long uid, String stockId, Integer count);
-    void sellOrder(Long uid, String stockId, Integer count);
+    void buyingOrder(Long uid, String stockId, String stockName, Integer count);
+    void sellingOrder(Long uid, String stockId, String stockName, Integer count);
     Long getStockPrice(String stockId);
 }
