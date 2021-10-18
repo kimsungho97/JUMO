@@ -30,14 +30,30 @@ public class User implements UserDetails {
 
     private Long balance;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Holding> holdings = new ArrayList<>();
 
+    public static User createUser(String id, String password){
+        User user = new User();
+        user.setId(id);
+        user.setPassword(password);
+        user.setBalance(0L);
+        return user;
+    }
+
+    public void subjectBalance(Long totalPrice){
+        this.balance -= totalPrice;
+    }
+
+    public void addBalance(Long totalPrice){
+        this.balance += totalPrice;
+    }
 
     @Override
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));

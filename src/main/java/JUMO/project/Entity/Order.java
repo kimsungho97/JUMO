@@ -14,7 +14,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uid")
     private User user;
 
@@ -31,10 +31,11 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private TradeType tradeType;
 
-    public static Order createOrder(User user, String stockId, Long eachPrice, Integer count){
+    public static Order createOrder(User user, String stockId, String stockName, Long eachPrice, Integer count){
         Order order = new Order();
         order.user = user;
         order.stockId = stockId;
+        order.stockName = stockName;
         order.eachPrice = eachPrice;
         order.count = count;
         order.orderDate = LocalDateTime.now();
@@ -42,6 +43,10 @@ public class Order {
 
         user.getOrders().add(order);
         return order;
+    }
+
+    public void changeTradeType(TradeType tradeType) {
+        this.tradeType = tradeType;
     }
 
 }
