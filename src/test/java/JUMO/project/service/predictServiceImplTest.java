@@ -1,7 +1,6 @@
 package JUMO.project.service;
 
 
-import JUMO.project.Entity.StockRow;
 import JUMO.project.Service.PredictService;
 import JUMO.project.Service.PredictServiceImpl;
 import org.junit.jupiter.api.Test;
