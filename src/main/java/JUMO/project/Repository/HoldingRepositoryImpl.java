@@ -26,4 +26,11 @@ public class HoldingRepositoryImpl implements HoldingRepository {
                 .setParameter("uid", uid)
                 .getResultList();
     }
+
+    // singleResult 사용시 검색결과 없으면 exception 발생
+    @Override
+    public List<Holding> findHoldingByUidStockId(Long uid, String stockId) {
+        return em.createQuery("select h from Holding h join h.user where h.stockId =: stockId",Holding.class).
+                setParameter("stockId", stockId).getResultList();
+    }
 }
