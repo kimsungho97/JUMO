@@ -1,24 +1,22 @@
 package JUMO.project.Service;
 
 import JUMO.project.Entity.Price;
-import JUMO.project.Repository.Price_Repository;
+import JUMO.project.Repository.PriceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
 
 
 @Transactional
 @Service
 public class Price_Service {
-    private final Price_Repository price_service;
+    private final PriceRepository price_service;
 
     @Autowired
-    public Price_Service(Price_Repository price_service) {
+    public Price_Service(PriceRepository price_service) {
         this.price_service = price_service;
     }
 
@@ -27,11 +25,11 @@ public class Price_Service {
     }
 
     public List<Price> findByName(String name){
-        return price_service.findByname(name);
+        return price_service.findByName(name);
     }
 
     public List<Price> findByCode(String code){
-        return price_service.findBycode(code);
+        return price_service.findByCode(code);
     }
 
     public HashMap<String,String> allStock_name(String name) {

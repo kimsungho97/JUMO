@@ -43,17 +43,22 @@ class OrderServiceImplTest {
         System.out.println("price = " + price);
     }
 
-//    @Rollback(value = false)
+    @Rollback(value = false)
     @Test
     void buyingAndSellingOrderTest() {
         User user = User.createUser("kjpark", "1234");
+        User user1 = User.createUser("kimsh", "q1w2e3");
+        userRepository.save(user1);
         userRepository.save(user);
         user.addBalance(10000000L);
+        user1.addBalance(100000000L);
 
 
         orderservice.buyingOrder(user.getUid(),"035420", "네이버", 4);
         orderservice.buyingOrder(user.getUid(),"035420", "네이버", 4);
         orderservice.sellingOrder(user.getUid(), "035420", "네이버", 3);
+
+        orderservice.buyingOrder(user1.getUid(), "035720", "카카오", 5);
 
 
     }

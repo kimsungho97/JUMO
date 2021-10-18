@@ -5,18 +5,15 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Primary
 @Repository
-public class Price_JPA_Repository implements Price_Repository{
+public class PriceRepositoryImpl implements PriceRepository {
     private final EntityManager entityManager;
 
-    public Price_JPA_Repository(EntityManager entityManager) {
+    public PriceRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
@@ -26,13 +23,14 @@ public class Price_JPA_Repository implements Price_Repository{
     }
 
     @Override
-    public List<Price> findByname(String name){
-        return entityManager.createQuery("select p from Price p where p.id.name = '"+name+"'",Price.class)
+    public List<Price> findByName(String name){
+        return entityManager.createQuery("select p from Price p where p.id.name like :stockName",Price.class)
+                .setParameter("stockName", "%"+name+"%")
                 .getResultList();
     }
 
     @Override
-    public List<Price> findBycode(String code){
+    public List<Price> findByCode(String code){
         return entityManager.createQuery("select p from Price p where p.code like '%"+code+"%'",Price.class)
                 .getResultList();
     }

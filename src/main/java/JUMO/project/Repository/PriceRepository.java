@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Stream;
 
-public interface Price_Repository {
+public interface PriceRepository {
     List<Price> findAll();
 
-    List<Price> findByname(String name);
+    List<Price> findByName(String name);
 
-    List<Price> findBycode(String code);
+    List<Price> findByCode(String code);
 
     HashMap<String,String> allStock_name(String name);
 
