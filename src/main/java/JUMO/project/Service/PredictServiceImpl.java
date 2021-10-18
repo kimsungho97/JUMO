@@ -17,22 +17,31 @@ public class PredictServiceImpl implements PredictService{
 
     @Override
     public ArrayList<String> getRecommend(String name) {
-        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(predictURL + "/predict/recommendStock")
-                .queryParam("name", name)
-                .build(false);  // 인코딩 하지않음
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
+        try {
+            UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(predictURL + "/predict/recommendStock")
+                    .queryParam("name", name)
+                    .build(false);  // 인코딩 하지않음
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
 
-        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setConnectTimeout(5000); // api 호출 타임아웃
-        factory.setReadTimeout(5000);   // api 읽기 타임아웃
+            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+            factory.setConnectTimeout(5000); // api 호출 타임아웃
+            factory.setReadTimeout(5000);   // api 읽기 타임아웃
 
-        RestTemplate template = new RestTemplate(factory);
-        ResponseEntity<PredictionDTO> response = template.exchange(
-                uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), PredictionDTO.class);
-        ArrayList<String> retList = new ArrayList<>();
-        retList.add(response.getBody().getIsLongTermFullmaesu());
-        retList.add(response.getBody().getIsShortTermFullmaesu());
-        return retList;
+
+            RestTemplate template = new RestTemplate(factory);
+            ResponseEntity<PredictionDTO> response = template.exchange(
+                    uriComponents.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), PredictionDTO.class);
+            ArrayList<String> retList = new ArrayList<>();
+            retList.add(response.getBody().getIsLongTermFullmaesu());
+            retList.add(response.getBody().getIsShortTermFullmaesu());
+            return retList;
+        }
+        catch (Exception e){
+            ArrayList<String> retList = new ArrayList<>();
+            retList.add("미응답");
+            retList.add("미응답");
+            return retList;
+        }
     }
 }
