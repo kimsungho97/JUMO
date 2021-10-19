@@ -31,7 +31,6 @@ class Price_Search{
     }
 }
 
-//@RequiredArgsConstructor
 @Controller
 @RequiredArgsConstructor
 public class Price_Controller {
@@ -39,11 +38,6 @@ public class Price_Controller {
     private final User_Service user_service;
     private final PredictService predictService;
 
-//    @Autowired
-//    public Price_Controller(Price_Service price_service, User_Service user_service){
-//        this.price_service=price_service;
-//        this.user_service=user_service;
-//    }
 
     @GetMapping("/price")
     public String price(Model model){
@@ -88,16 +82,15 @@ public class Price_Controller {
     public String stock_list(@RequestParam @Nullable String name, @RequestParam @Nullable String code, ModelMap model){
         HashMap<String, String> stock_name=null;
 
-        if(name==null || (name.equals("") && code.equals(""))){
-            stock_name= price_service.allStock_name("");
+        if(name==null || (name.equals("") && code.equals("")) || code == null){
+            stock_name= price_service.allStockName("");
         }
         else if(name.equals("")){
             stock_name= price_service.allStock_code(code);
         }
         else if(code.equals("")){
-            stock_name= price_service.allStock_name(name);
+            stock_name= price_service.allStockName(name);
         }
-        System.out.println("name: "+name+", code: "+code);
 
         model.addAttribute("stocks",stock_name);
         return "stock_list";
