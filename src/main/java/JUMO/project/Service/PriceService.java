@@ -10,15 +10,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
 @Service
-public class Price_Service {
+public class PriceService {
     private final PriceRepository priceRepository;
 
     @Autowired
-    public Price_Service(PriceRepository priceRepository) {
+    public PriceService(PriceRepository priceRepository) {
         this.priceRepository = priceRepository;
     }
 
@@ -34,28 +36,20 @@ public class Price_Service {
         return priceRepository.findByCode(code);
     }
 
-    public HashMap<String,String> allStockName(String name) {
+    public Map<String, String> allStockName(String name) {
         List<StockInfoDTO> findStocks = priceRepository.findAllStockInfo();
 
-        HashMap<String,String> result=new HashMap<>();
-        for (StockInfoDTO stock : findStocks) {
-            if(stock.getStockName().contains(name)){
-                result.put(stock.getStockName(), stock.getStockId());
-            }
-        }
-
-        return result;
+        return findStocks.stream().filter(stockInfoDTO -> stockInfoDTO.getStockName().contains(name))
+                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getStockId));
     }
-    public HashMap<String,String> allStock_code(String code) {
+
+    public Map<String, String> allStockCode(String code) {
         List<StockInfoDTO> findStocks = priceRepository.findAllStockInfo();
 
         HashMap<String,String> result=new HashMap<>();
-        for (StockInfoDTO stock : findStocks) {
-            if(stock.getStockId().contains(code)){
-                result.put(stock.getStockName(), stock.getStockId());
-            }
-        }
 
-        return result;
+        return findStocks.stream().filter(stockInfoDTO -> stockInfoDTO.getStockId().contains(code))
+                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getStockId));
+
     }
 }

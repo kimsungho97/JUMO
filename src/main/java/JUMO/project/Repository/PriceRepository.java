@@ -14,7 +14,5 @@ public interface PriceRepository {
 
     List<Price> findByCode(String code);
 
-    HashMap<String,String> allStock_name(String name);
-
-    HashMap<String,String> allStock_code(String code);
+    List<StockInfoDTO> findAllStockInfo();
 }

@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class User_Service implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository user_repository;
 
     @Autowired
-    public User_Service(UserRepository user_repository){
+    public UserService(UserRepository user_repository){
         this.user_repository=user_repository;
     }
 
@@ -48,9 +48,6 @@ public class User_Service implements UserDetailsService {
         return false;
     }
 
-//    public List<Order> findOrderList(Long uid) {
-//        user_repository
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

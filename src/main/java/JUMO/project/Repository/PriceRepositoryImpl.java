@@ -1,6 +1,7 @@
 package JUMO.project.Repository;
 
 import JUMO.project.Entity.Price;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -8,7 +9,6 @@ import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.List;
 
-@Primary
 @Repository
 public class PriceRepositoryImpl implements PriceRepository {
     private final EntityManager entityManager;
@@ -19,7 +19,7 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     public List<Price> findAll(){
-        return entityManager.createQuery("select p from Price p where p.id.name='DSR'",Price.class).getResultList();
+        return entityManager.createQuery("select p from Price p",Price.class).getResultList();
     }
 
     @Override
@@ -36,28 +36,11 @@ public class PriceRepositoryImpl implements PriceRepository {
     }
 
     @Override
-    public HashMap<String,String> allStock_name(String name){
-        List<Object> prices=entityManager.createQuery("select p.id.name, p.code from Price p").getResultList();
-        HashMap<String,String> result=new HashMap<>();
-        for(Object object:prices){
-            Object[] results=(Object[]) object;
-            if(((String)results[0]).contains(name)) {
-                result.put((String) results[0], (String) results[1]);
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public HashMap<String,String> allStock_code(String code){
-        List<Object> prices=entityManager.createQuery("select p.id.name, p.code from Price p").getResultList();
-        HashMap<String,String> result=new HashMap<>();
-        for(Object object:prices){
-            Object[] results=(Object[]) object;
-            if(((String)results[1]).contains(code)) {
-                result.put((String) results[0], (String) results[1]);
-            }
-        }
-        return result;
+    public List<StockInfoDTO> findAllStockInfo(){
+        List<StockInfoDTO> prices=entityManager
+                .createQuery(
+                        "select distinct new JUMO.project.Repository.StockInfoDTO(p.code, p.id.name) from Price p"
+                        , StockInfoDTO.class).getResultList();
+        return prices;
     }
 }

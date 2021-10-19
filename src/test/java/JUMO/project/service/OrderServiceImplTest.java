@@ -2,12 +2,11 @@ package JUMO.project.service;
 
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.OrderRepository;
-import JUMO.project.Repository.User_Repository;
+import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.OrderService;
 import JUMO.project.exception.NoHoldingException;
 import JUMO.project.exception.NotEnoughHoldingException;
 import JUMO.project.exception.NotEnoughMoneyException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +25,7 @@ class OrderServiceImplTest {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    User_Repository userRepository;
+    UserRepository userRepository;
 
 //    @BeforeEach
 //    public void beforeEach(){

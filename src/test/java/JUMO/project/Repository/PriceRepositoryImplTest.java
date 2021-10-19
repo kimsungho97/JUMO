@@ -30,4 +30,10 @@ class PriceRepositoryImplTest {
         System.out.println("prices.size() = " + prices.size());
     }
 
+    @Test
+    public void findAllTest(){
+        List<Price> prices = priceRepository.findAll();
+        System.out.println("prices.size() = " + prices.size());
+    }
+
 }

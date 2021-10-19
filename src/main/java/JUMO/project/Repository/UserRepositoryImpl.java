@@ -2,7 +2,6 @@ package JUMO.project.Repository;
 
 import JUMO.project.Entity.User;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -10,12 +9,12 @@ import java.util.Optional;
 
 
 @Repository
-public class User_JPA_Repository implements User_Repository{
+public class UserRepositoryImpl implements UserRepository {
 
     private final EntityManager entityManager;
 
     //Constructor
-    public User_JPA_Repository(EntityManager entityManager){
+    public UserRepositoryImpl(EntityManager entityManager){
         this.entityManager=entityManager;
     }
 
