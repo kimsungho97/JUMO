@@ -1,7 +1,7 @@
 package JUMO.project.Controller;
 
 import JUMO.project.Entity.User;
-import JUMO.project.Service.User_Service;
+import JUMO.project.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -16,9 +16,9 @@ import java.text.DecimalFormat;
 
 @RequiredArgsConstructor
 @Controller
-public class Main_Controller {
+public class MainController {
 
-    private final User_Service user_service;
+    private final UserService user_service;
 
     @GetMapping(value="/")
     public String main(){
@@ -26,7 +26,7 @@ public class Main_Controller {
     }
 
     @GetMapping(value="/login")
-    public String login_pages(){
+    public String loginPages(){
         return "login";
     }
 
@@ -37,7 +37,7 @@ public class Main_Controller {
     }
 
     @GetMapping("/signup")
-    public String signup_page(){
+    public String signupPage(){
         return "signup";
     }
 
@@ -48,7 +48,7 @@ public class Main_Controller {
     }
 
     @GetMapping("/userinfo")
-    public String user_info(Model model){
+    public String userInfo(Model model){
         User user=(User)user_service.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         DecimalFormat format=new DecimalFormat("###,###");
         String balance=format.format(user.getBalance());

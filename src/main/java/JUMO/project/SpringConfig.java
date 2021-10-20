@@ -1,18 +1,10 @@
 package JUMO.project;
 
-import JUMO.project.Repository.Price_JPA_Repository;
-import JUMO.project.Repository.User_JPA_Repository;
-import JUMO.project.Repository.User_Repository;
-import JUMO.project.Service.Price_Service;
-import JUMO.project.Service.User_Service;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
+import JUMO.project.Repository.PriceRepository;
+import JUMO.project.Repository.PriceRepositoryImpl;
+import JUMO.project.Service.PriceService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.persistence.EntityManager;
 
@@ -32,18 +24,18 @@ public class SpringConfig{
 //    }
 
 //    @Bean
-//    public User_Repository user_repository(){
+//    public UserRepository user_repository(){
 //        return new User_JPA_Repository(entityManager);
 //    }
 
     @Bean
-    public Price_Service price_service(){
-        return new Price_Service(price_repository());
+    public PriceService price_service(){
+        return new PriceService(priceRepository());
     }
 
     @Bean
-    public Price_JPA_Repository price_repository(){
-        return new Price_JPA_Repository(entityManager);
+    public PriceRepository priceRepository(){
+        return new PriceRepositoryImpl(entityManager);
     }
 
 //    @Bean(name = "system")

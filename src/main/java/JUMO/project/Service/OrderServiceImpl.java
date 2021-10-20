@@ -6,7 +6,7 @@ import JUMO.project.Entity.TradeType;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.HoldingRepository;
 import JUMO.project.Repository.OrderRepository;
-import JUMO.project.Repository.User_Repository;
+import JUMO.project.Repository.UserRepository;
 import JUMO.project.exception.NoHoldingException;
 import JUMO.project.exception.NotEnoughMoneyException;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +30,7 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
-    private final User_Repository userRepository;
+    private final UserRepository userRepository;
     private final HoldingRepository holdingRepository;
 
     String url = "http://localhost:5000";

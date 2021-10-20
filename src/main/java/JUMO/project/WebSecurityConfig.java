@@ -1,6 +1,6 @@
 package JUMO.project;
 
-import JUMO.project.Service.User_Service;
+import JUMO.project.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
-    private final User_Service user_service; // 3
+    private final UserService user_service; // 3
 
     private final CustomAuthFailureHandler customAuthFailureHandler;
 

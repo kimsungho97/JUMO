@@ -2,8 +2,8 @@ package JUMO.project.Controller;
 
 import JUMO.project.Entity.Price;
 import JUMO.project.Service.PredictService;
-import JUMO.project.Service.Price_Service;
-import JUMO.project.Service.User_Service;
+import JUMO.project.Service.PriceService;
+import JUMO.project.Service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,33 +17,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
-class Price_Search{
+class PriceSearch {
     private String name;
     private String code;
 
-    public Price_Search(String name, String code){
+    public PriceSearch(String name, String code){
         this.name=name;
         this.code=code;
     }
 }
 
-//@RequiredArgsConstructor
 @Controller
 @RequiredArgsConstructor
-public class Price_Controller {
-    private final Price_Service price_service;
-    private final User_Service user_service;
+public class PriceController {
+    private final PriceService price_service;
+    private final UserService user_service;
     private final PredictService predictService;
 
-//    @Autowired
-//    public Price_Controller(Price_Service price_service, User_Service user_service){
-//        this.price_service=price_service;
-//        this.user_service=user_service;
-//    }
 
     @GetMapping("/price")
     public String price(Model model){
@@ -85,28 +79,27 @@ public class Price_Controller {
 
 
     @GetMapping("/stock_list")
-    public String stock_list(@RequestParam @Nullable String name, @RequestParam @Nullable String code, ModelMap model){
-        HashMap<String, String> stock_name=null;
+    public String stockList(@RequestParam @Nullable String name, @RequestParam @Nullable String code, ModelMap model){
+        Map<String, String> stockName=null;
 
-        if(name==null || (name.equals("") && code.equals(""))){
-            stock_name= price_service.allStock_name("");
+        if(name==null || (name.equals("") && code.equals("")) || code == null){
+            stockName= price_service.allStockName("");
         }
         else if(name.equals("")){
-            stock_name= price_service.allStock_code(code);
+            stockName= price_service.allStockCode(code);
         }
         else if(code.equals("")){
-            stock_name= price_service.allStock_name(name);
+            stockName= price_service.allStockName(name);
         }
-        System.out.println("name: "+name+", code: "+code);
 
-        model.addAttribute("stocks",stock_name);
+        model.addAttribute("stocks",stockName);
         return "stock_list";
     }
 
 
 
     @PostMapping("/search")
-    public String price_search(Price_Search price_search, Model model){
+    public String priceSearch(PriceSearch price_search, Model model){
         System.out.println("name: "+price_search.getName()+", code:"+price_search.getCode());
         if(price_search.getCode().length()==0 && price_search.getName().length()==0){
             ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();

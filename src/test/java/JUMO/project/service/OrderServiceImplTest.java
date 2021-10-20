@@ -2,12 +2,11 @@ package JUMO.project.service;
 
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.OrderRepository;
-import JUMO.project.Repository.User_Repository;
+import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.OrderService;
 import JUMO.project.exception.NoHoldingException;
 import JUMO.project.exception.NotEnoughHoldingException;
 import JUMO.project.exception.NotEnoughMoneyException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +25,7 @@ class OrderServiceImplTest {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    User_Repository userRepository;
+    UserRepository userRepository;
 
 //    @BeforeEach
 //    public void beforeEach(){
@@ -43,17 +42,22 @@ class OrderServiceImplTest {
         System.out.println("price = " + price);
     }
 
-//    @Rollback(value = false)
+    @Rollback(value = false)
     @Test
     void buyingAndSellingOrderTest() {
         User user = User.createUser("kjpark", "1234");
+        User user1 = User.createUser("kimsh", "q1w2e3");
+        userRepository.save(user1);
         userRepository.save(user);
         user.addBalance(10000000L);
+        user1.addBalance(100000000L);
 
 
         orderservice.buyingOrder(user.getUid(),"035420", "네이버", 4);
         orderservice.buyingOrder(user.getUid(),"035420", "네이버", 4);
         orderservice.sellingOrder(user.getUid(), "035420", "네이버", 3);
+
+        orderservice.buyingOrder(user1.getUid(), "035720", "카카오", 5);
 
 
     }
