@@ -25,7 +25,7 @@ public class PriceRepositoryImpl implements PriceRepository {
     @Override
     public List<Price> findByName(String name){
         return entityManager.createQuery("select p from Price p where p.id.name like :stockName",Price.class)
-                .setParameter("stockName", "%"+name+"%")
+                .setParameter("stockName", name)
                 .getResultList();
     }
 
