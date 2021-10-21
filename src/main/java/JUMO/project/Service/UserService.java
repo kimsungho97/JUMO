@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserService implements UserDetailsService {
 
-    private final UserRepository user_repository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository user_repository){
-        this.user_repository=user_repository;
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
     //회원가입
@@ -27,8 +27,9 @@ public class UserService implements UserDetailsService {
         user.setPassword(encoder.encode(user.getPassword()));
 
         //Id 중복 확인
-        if(user_repository.findById(user.getId()).isEmpty()){
-            user_repository.save(user);
+        if(userRepository.findById(user.getId()).isEmpty()){
+            user.setBalance(1000000L);
+            userRepository.save(user);
             return user;
         }
         return null;
@@ -39,8 +40,8 @@ public class UserService implements UserDetailsService {
         BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
 
-        if(!user_repository.findById(user.getId()).isEmpty()){
-            User result=user_repository.findById(user.getId()).get();
+        if(userRepository.findById(user.getId()).isPresent()){
+            User result= userRepository.findById(user.getId()).get();
             if(result.getPassword().equals(user.getPassword())){
                 return true;
             }
@@ -51,7 +52,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return user_repository.findById(username)
+        return userRepository.findById(username)
                 .orElseThrow(()->new UsernameNotFoundException(username));
     }
 }
