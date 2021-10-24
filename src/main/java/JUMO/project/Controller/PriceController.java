@@ -3,7 +3,7 @@ package JUMO.project.Controller;
 import JUMO.project.Entity.Price;
 import JUMO.project.Service.PredictService;
 import JUMO.project.Service.PriceService;
-import JUMO.project.Service.UserService;
+import JUMO.project.Service.UserServiceImpl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -38,7 +37,7 @@ class PriceSearch {
 @Slf4j
 public class PriceController {
     private final PriceService price_service;
-    private final UserService user_service;
+    private final UserServiceImpl user_service;
     private final PredictService predictService;
 
 

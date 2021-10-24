@@ -1,28 +1,51 @@
-package JUMO.project;
+package JUMO.project.springsecurity;
 
+import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.UserService;
+import JUMO.project.Service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity // 1
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
 
-    private final UserService user_service; // 3
+    private final UserServiceImpl user_service; // 3
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     private final CustomAuthFailureHandler customAuthFailureHandler;
+
+    private final UserRepository userRepository;
 
     @Override
     public void configure(WebSecurity web) { // 4
         web.ignoring().antMatchers("/templates/css/**", "/js/**", "/img/**");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -30,21 +53,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
         http
                 .csrf()
                 .disable()
-                .authorizeRequests()
-                .antMatchers("/login","/","signup").permitAll()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin() // 7
-                .loginPage("/login") // 로그인 페이지 링크
-                .loginProcessingUrl("/login")
-                .usernameParameter("id")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/")
-                .failureHandler(customAuthFailureHandler)
-
-                //.failureUrl("/login")
-                //.defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
-
+                .authorizeRequests()
+                .antMatchers("/login").hasRole("USER")
+                .antMatchers("/api/login","/","signup","/css/*").permitAll()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class)
         ;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(UserRepository userRepository){
+        return new CustomUrlAuthenticationSuccessHandler(userRepository);
     }
 
 

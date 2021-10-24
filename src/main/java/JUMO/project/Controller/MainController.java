@@ -1,7 +1,7 @@
 package JUMO.project.Controller;
 
 import JUMO.project.Entity.User;
-import JUMO.project.Service.UserService;
+import JUMO.project.Service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +20,7 @@ import java.text.DecimalFormat;
 @Controller
 public class MainController {
 
-    private final UserService user_service;
+    private final UserServiceImpl user_service;
 
     @GetMapping(value="/")
     public String main(){
