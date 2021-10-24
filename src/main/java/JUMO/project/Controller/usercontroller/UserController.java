@@ -1,5 +1,7 @@
-package JUMO.project.Controller;
+package JUMO.project.Controller.usercontroller;
 
+import JUMO.project.Controller.usercontroller.LoginResultDTO;
+import JUMO.project.Controller.usercontroller.SignupResultDTO;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.UserServiceImpl;
@@ -7,9 +9,10 @@ import JUMO.project.springsecurity.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,6 +51,20 @@ public class UserController {
         return new SignupResultDTO(true, null);
     }
 
-//    @GetMapping("/userinfo")
-//    public
+    @GetMapping("/userinfo")
+    public UserInfoDTO userInfo(HttpServletRequest request, HttpServletResponse response){
+        String token = jwtTokenProvider.resolveToken(request);
+        String userId = jwtTokenProvider.getUserId(token);
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()){
+            User foundUser = userOptional.get();
+            return new UserInfoDTO(true, foundUser.getId(), foundUser.getBalance(), null);
+        }
+        else{
+            log.error("can't find userInfo");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return new UserInfoDTO(false, null, null, "can't find userInfo");
+        }
+    }
 }

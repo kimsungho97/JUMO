@@ -1,7 +1,5 @@
 package JUMO.project.Service;
 
-import JUMO.project.Controller.LoginResultDTO;
-import JUMO.project.Controller.SignupResultDTO;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;

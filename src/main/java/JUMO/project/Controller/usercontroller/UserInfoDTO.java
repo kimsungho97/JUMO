@@ -1,16 +1,14 @@
-package JUMO.project.Controller;
+package JUMO.project.Controller.usercontroller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
 @AllArgsConstructor
-public class LoginResultDTO {
+@Getter @Setter
+public class UserInfoDTO {
     private boolean result;
     private String id;
     private Long balance;
     private String msg;
-    private String token;
 }

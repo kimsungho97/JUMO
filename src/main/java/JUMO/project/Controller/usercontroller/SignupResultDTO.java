@@ -1,4 +1,4 @@
-package JUMO.project.Controller;
+package JUMO.project.Controller.usercontroller;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
