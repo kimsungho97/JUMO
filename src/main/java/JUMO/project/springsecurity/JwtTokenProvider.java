@@ -68,7 +68,7 @@ public class JwtTokenProvider {
 
     // 토큰에서 회원 정보 추출
     public String getUserId(String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id", String.class);
     }
 
     // Request의 Header에서 token 값을 가져옵니다. "X-AUTH-TOKEN" : "TOKEN값'
@@ -79,7 +79,7 @@ public class JwtTokenProvider {
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(jwtToken);
+            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             return false;
