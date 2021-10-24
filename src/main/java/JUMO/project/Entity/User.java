@@ -41,7 +41,7 @@ public class User implements UserDetails {
         User user = new User();
         user.setId(id);
         user.setPassword(password);
-        user.setBalance(0L);
+        user.setBalance(1000000L);
         return user;
     }
 

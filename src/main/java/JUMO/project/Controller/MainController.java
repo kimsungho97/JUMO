@@ -27,16 +27,16 @@ public class MainController {
         return "index";
     }
 
-    @GetMapping(value="/login")
-    public String loginPages(){
-        return "login";
-    }
-
-    @PostMapping(value="/signup")
-    public String signup(User user){
-        user_service.Signup(user);
-        return "redirect:/";
-    }
+//    @GetMapping(value="/login")
+//    public String loginPages(){
+//        return "login";
+//    }
+//
+//    @PostMapping(value="/signup")
+//    public String signup(User user){
+//        user_service.Signup(user);
+//        return "redirect:/";
+//    }
 
     @GetMapping("/signup")
     public String signupPage(){
