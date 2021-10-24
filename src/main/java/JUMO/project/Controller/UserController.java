@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-public class LoginController {
+public class UserController {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -27,13 +27,18 @@ public class LoginController {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/api/login")
-    public String login(@RequestBody Map<String, String> user) {
+    public LoginResultDTO login(@RequestBody Map<String, String> user) {
         User member = userRepository.findById(user.get("id"))
                 .orElseThrow(() -> new IllegalArgumentException("user not found"));
 
         if (!bCryptPasswordEncoder.matches(user.get("password"), member.getPassword())) {
-            throw new IllegalArgumentException("password is not correct");
+            log.warn("password is not correct");
+            return new LoginResultDTO(
+                    false, member.getId(), member.getBalance(),
+                    "password is not correct", "");
         }
-        return jwtTokenProvider.createJwtAuthToken(member.getId(), member).get();
+        return new LoginResultDTO(
+                true, member.getId(), member.getBalance(),
+                null, jwtTokenProvider.createJwtAuthToken(member.getId(), member).get());
     }
 }
