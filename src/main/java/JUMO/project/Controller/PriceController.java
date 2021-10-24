@@ -7,6 +7,7 @@ import JUMO.project.Service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -33,6 +35,7 @@ class PriceSearch {
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class PriceController {
     private final PriceService price_service;
     private final UserService user_service;
@@ -41,10 +44,15 @@ public class PriceController {
 
     @GetMapping("/price")
     public String price(Model model){
-        ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
+//        ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
         //User user=(User) user_service.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         //model.addAttribute("user",user);
-        model.addAttribute("price",price);
+//        List<Price> tmpPrice = new ArrayList<>();
+//        for (int i=0; i<100; i++){
+//            tmpPrice.add(price.get(i));
+//        }
+//
+//        model.addAttribute("price",tmpPrice);
         return "price";
     }
 
@@ -100,13 +108,13 @@ public class PriceController {
 
     @PostMapping("/search")
     public String priceSearch(PriceSearch price_search, Model model){
-        System.out.println("name: "+price_search.getName()+", code:"+price_search.getCode());
-        if(price_search.getCode().length()==0 && price_search.getName().length()==0){
-            ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
-            model.addAttribute("price",price);
-            return "price";
-        }
-        else if(price_search.getCode().length()==0){
+        log.info("priceSearch [name = {}] [code = {}]", price_search.getName(), price_search.getCode());
+//        if(price_search.getCode().length()==0 && price_search.getName().length()==0){
+//            ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
+//            model.addAttribute("price",price);
+//            return "price";
+//        }
+        if(price_search.getCode().length()==0){
             ArrayList<Price> price= (ArrayList<Price>) price_service.findByName(price_search.getName());
             model.addAttribute("price",price);
             return "price";

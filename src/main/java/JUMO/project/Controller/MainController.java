@@ -3,6 +3,7 @@ package JUMO.project.Controller;
 import JUMO.project.Entity.User;
 import JUMO.project.Service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.DecimalFormat;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class MainController {
@@ -50,7 +52,7 @@ public class MainController {
     @GetMapping("/userinfo")
     public String userInfo(Model model){
         User user=(User)user_service.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        DecimalFormat format=new DecimalFormat("###,###");
+        DecimalFormat format = new DecimalFormat("###,###");
         String balance=format.format(user.getBalance());
         model.addAttribute("user",user);
         model.addAttribute("balance",balance);

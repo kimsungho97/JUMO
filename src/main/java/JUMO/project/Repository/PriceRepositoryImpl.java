@@ -19,7 +19,10 @@ public class PriceRepositoryImpl implements PriceRepository {
 
     @Override
     public List<Price> findAll(){
-        return entityManager.createQuery("select p from Price p",Price.class).getResultList();
+        return entityManager.createQuery("select p from Price p",Price.class)
+                .setFirstResult(90)
+                .setMaxResults(100)
+                .getResultList();
     }
 
     @Override
