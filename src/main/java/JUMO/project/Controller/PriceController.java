@@ -1,6 +1,8 @@
 package JUMO.project.Controller;
 
 import JUMO.project.Entity.Price;
+import JUMO.project.Repository.PriceRepository;
+import JUMO.project.Repository.StockInfoDTO;
 import JUMO.project.Service.PredictService;
 import JUMO.project.Service.PriceService;
 import JUMO.project.Service.UserServiceImpl;
@@ -12,13 +14,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
@@ -32,27 +30,21 @@ class PriceSearch {
     }
 }
 
-@Controller
+@RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
 public class PriceController {
     private final PriceService price_service;
     private final UserServiceImpl user_service;
     private final PredictService predictService;
+    private final PriceRepository priceRepository;
 
-
-    @GetMapping("/price")
-    public String price(Model model){
-//        ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
-        //User user=(User) user_service.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        //model.addAttribute("user",user);
-//        List<Price> tmpPrice = new ArrayList<>();
-//        for (int i=0; i<100; i++){
-//            tmpPrice.add(price.get(i));
-//        }
-//
-//        model.addAttribute("price",tmpPrice);
-        return "price";
+    @GetMapping("/chartlist")
+    public Map<String, List<StockInfoDTO>> chartList(){
+        Map<String, List<StockInfoDTO>> responseMap = new HashMap<>();
+        responseMap.put("chartlist", priceRepository.findAllStockInfo());
+        return responseMap;
     }
 
     @GetMapping("/chart")

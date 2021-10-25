@@ -40,7 +40,7 @@ public class PriceService {
         List<StockInfoDTO> findStocks = priceRepository.findAllStockInfo();
 
         return findStocks.stream().filter(stockInfoDTO -> stockInfoDTO.getStockName().contains(name))
-                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getStockId));
+                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getCode));
     }
 
     public Map<String, String> allStockCode(String code) {
@@ -48,8 +48,8 @@ public class PriceService {
 
         HashMap<String,String> result=new HashMap<>();
 
-        return findStocks.stream().filter(stockInfoDTO -> stockInfoDTO.getStockId().contains(code))
-                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getStockId));
+        return findStocks.stream().filter(stockInfoDTO -> stockInfoDTO.getCode().contains(code))
+                .collect(Collectors.toMap(StockInfoDTO::getStockName, StockInfoDTO::getCode));
 
     }
 }
