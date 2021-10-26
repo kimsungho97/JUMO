@@ -1,4 +1,4 @@
-package JUMO.project.Controller;
+package JUMO.project.Controller.deprecatedcontroller;
 
 import JUMO.project.Entity.Price;
 import JUMO.project.Repository.PriceRepository;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Getter
-@Setter
-class PriceSearch {
-    private String name;
-    private String code;
-
-    public PriceSearch(String name, String code){
-        this.name=name;
-        this.code=code;
-    }
-}
+//@Getter
+//@Setter
+//class PriceSearch {
+//    private String name;
+//    private String code;
+//
+//    public PriceSearch(String name, String code){
+//        this.name=name;
+//        this.code=code;
+//    }
+//}
 
 @RestController
 @RequestMapping("/api")
@@ -40,14 +40,14 @@ public class PriceController {
     private final PredictService predictService;
     private final PriceRepository priceRepository;
 
-    @GetMapping("/chartlist")
+//    @GetMapping("/chartlist")
     public Map<String, List<StockInfoDTO>> chartList(){
         Map<String, List<StockInfoDTO>> responseMap = new HashMap<>();
         responseMap.put("chartlist", priceRepository.findAllStockInfo());
         return responseMap;
     }
 
-    @GetMapping("/chart")
+//    @GetMapping("/chart")
     public String chart(@RequestParam String stock, ModelMap model){
         ArrayList<Price> prices= (ArrayList<Price>) price_service.findByName(stock);
         Collections.sort(prices);
@@ -77,7 +77,7 @@ public class PriceController {
     }
 
 
-    @GetMapping("/stock_list")
+//    @GetMapping("/stock_list")
     public String stockList(@RequestParam @Nullable String name, @RequestParam @Nullable String code, ModelMap model){
         Map<String, String> stockName=null;
 
@@ -97,24 +97,24 @@ public class PriceController {
 
 
 
-    @PostMapping("/search")
-    public String priceSearch(PriceSearch price_search, Model model){
-        log.info("priceSearch [name = {}] [code = {}]", price_search.getName(), price_search.getCode());
-//        if(price_search.getCode().length()==0 && price_search.getName().length()==0){
-//            ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
+//    @PostMapping("/search")
+//    public String priceSearch(PriceSearch price_search, Model model){
+//        log.info("priceSearch [name = {}] [code = {}]", price_search.getName(), price_search.getCode());
+////        if(price_search.getCode().length()==0 && price_search.getName().length()==0){
+////            ArrayList<Price> price= (ArrayList<Price>) price_service.findAll();
+////            model.addAttribute("price",price);
+////            return "price";
+////        }
+//        if(price_search.getCode().length()==0){
+//            ArrayList<Price> price= (ArrayList<Price>) price_service.findByName(price_search.getName());
 //            model.addAttribute("price",price);
 //            return "price";
 //        }
-        if(price_search.getCode().length()==0){
-            ArrayList<Price> price= (ArrayList<Price>) price_service.findByName(price_search.getName());
-            model.addAttribute("price",price);
-            return "price";
-        }
-        else if(price_search.getName().length()==0){
-            ArrayList<Price> price= (ArrayList<Price>) price_service.findByCode(price_search.getCode());
-            model.addAttribute("price",price);
-            return "price";
-        }
-        return "price";
-    }
+//        else if(price_search.getName().length()==0){
+//            ArrayList<Price> price= (ArrayList<Price>) price_service.findByCode(price_search.getCode());
+//            model.addAttribute("price",price);
+//            return "price";
+//        }
+//        return "price";
+//    }
 }

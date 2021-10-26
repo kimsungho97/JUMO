@@ -17,13 +17,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserServiceImpl implements UserDetailsService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     //회원가입
+    @Override
     public Optional<User> Signup(String userId, String password){
         // 중복체크
         if (userRepository.findById(userId).isPresent()){
@@ -38,22 +39,11 @@ public class UserServiceImpl implements UserDetailsService {
 
         return Optional.of(newUser);
 
-//        return new SignupResultDTO(true, "id has been already used");
 
-
-
-
-//        user.setPassword(encoder.encode(user.getPassword()));
-//
-//        //Id 중복 확인
-//        if(userRepository.findById(user.getId()).isEmpty()){
-//            userRepository.save(user);
-//            return user;
-//        }
-//        return null;
     }
 
     //로그인
+    @Override
     public Optional<User> login(String userId, String password){
 
         Optional<User> findUser = userRepository.findById(userId);

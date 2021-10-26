@@ -1,4 +1,4 @@
-package JUMO.project.Controller;
+package JUMO.project.Controller.deprecatedcontroller;
 
 import JUMO.project.Entity.User;
 import JUMO.project.Service.UserServiceImpl;
