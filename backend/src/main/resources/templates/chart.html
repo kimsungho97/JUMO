@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/drag-panes.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.w3.org/1999/xhtml"
+      lang="ko">
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css" />
+<link rel="preconnect" href="https://fonts.gstatic.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+<link th:href="@{/css/chart.css}" rel="stylesheet"/>
+<link rel="stylesheet" href="./css/chart.css">
+
+
+<body>
+  <style>
+   
+    </style>
+<header>
+  <div class="inner">
+    <a href="/" class="logo">
+      <img src="./images/JUMO_logo.png" alt="JUMO">
+    </a>
+
+    <div class="sub-menu">
+      <ul class="menu">
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/login">로그인</a>
+        </li>
+        <li sec:authorize="hasRole('ANONYMOUS')">
+          <a href="/signup">회원가입</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/userinfo">내정보</a>
+        </li>
+        <li sec:authorize="hasRole('USER')">
+          <a href="/logout">로그아웃</a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</header>
+<div class="upper-empty"></div>
+<div class="body inner">
+  <div class="chart-info">
+    <div class="chart-title flex-column" >
+      <label class="chart-title-lbl chart-title-name" th:text="${stock_name}"></label>
+      <label class="chart-title-lbl chart-title-code" th:text="${stock_code}"></label>
+      <div class="chart-recommend flex-row">
+      <span class="recommend-short">
+          Short Term Prediction
+      </span>
+        <label class="recommend-result" th:text="${recommend_Short}">
+
+        </label>
+      </div>
+
+      <div class="chart-recommend flex-row">
+      <span class="recommend-long">
+          Long Term Prediction
+      </span>
+        <label class="recommend-result" th:text="${recommend_Long}">
+
+        </label>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <div class="chart-view" id="container" style="height: 400px; min-width: 310px"></div>
+</div>
+</body>
+
+<script th:inline="javascript">
+  data=[[${prices}]]
+</script>
+
+<script src="./scripts/chart.js">
+</script>
+

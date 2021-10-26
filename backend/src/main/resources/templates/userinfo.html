@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js">
+</script>
+
+
+<body>
+
+<header>
+    <div class="inner">
+        <a href="/" class="logo">
+            <img src="./images/JUMO_logo.png" alt="JUMO">
+        </a>
+
+        <div class="sub-menu">
+            <ul class="menu">
+                <li sec:authorize="hasRole('ANONYMOUS')">
+                    <a href="/login">로그인</a>
+                </li>
+                <li sec:authorize="hasRole('ANONYMOUS')">
+                    <a href="/signup">회원가입</a>
+                </li>
+                <li sec:authorize="hasRole('USER')">
+                    <a href="/userinfo">내정보</a>
+                </li>
+                <li sec:authorize="hasRole('USER')">
+                    <a href="/logout">로그아웃</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</header>
+
+
+<div>
+    <h2>로그인 정보</h2>
+    <p>ID : <span th:text="${user.id}"></span><p>
+    <p>남은 금액 : <span th:text="${balance}"></span><p>
+</div>
+
+</body>
+</html>
