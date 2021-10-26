@@ -6,7 +6,7 @@ export default function ChartListContainer({ history }) {
     const [stockName, setStockName] = useState('');
     const [stockCode, setStockCode] = useState('');
 
-    const data = [{ name: "삼성", code: "003460.KS" }, { name: "LG", code: "003460.KS" }]
+    const data = fetchChartList();
     return (
         <>
             <SearchBar>
@@ -63,6 +63,13 @@ export default function ChartListContainer({ history }) {
 
         </>
     )
+}
+
+function fetchChartList() {
+    return [
+        { name: "삼성", code: "003460.KS" },
+        { name: "LG", code: "003460.KS" }
+    ];
 }
 
 const rowFiltered = (stock, name, code) => {

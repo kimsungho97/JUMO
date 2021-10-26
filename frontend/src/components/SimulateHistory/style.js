@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled from "styled-components"
+
 
 export const Inner = styled.div`
     display: flex;
@@ -7,30 +8,7 @@ export const Inner = styled.div`
 `
 
 
-export const Info = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    height: 80%;
-    width: 20%;
-    min-height: 500px;
-    min-width: 300px;
-    border: 1px #fff solid;
-`
-
-
-export const InfoInner = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    height: 80%;
-    width: 100%;
-    min-height: 500px;
-    border: 1px #fff solid;
-`
-
-export const Holding = styled.div`
+export const History = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -41,7 +19,7 @@ export const Holding = styled.div`
     min-width: 300px;
     border: 1px #fff solid;
 `
-export const HoldingInner = styled.div`
+export const HistoryInner = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -53,7 +31,7 @@ export const HoldingInner = styled.div`
 `
 
 
-export const HoldingTable = styled.table`
+export const HistoryTable = styled.table`
     display: flex;
     flex-direction: column;
     position: relative;
@@ -80,13 +58,6 @@ export const TableHeader = styled.th`
 `
 
 
-export const Title = styled.div`
-    position: relative;
-    width: 100%;
-    heigth: 50px;
-    background-color: grey;
-    text-align: center;
-`
 
 export const TableData = styled.td`
     width: 150px;

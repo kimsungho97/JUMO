@@ -6,6 +6,8 @@ export const TabBar = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: start;
+    margin-left: 20px;
+    margin-top: 20px;
 `
 
 export const Tab = styled.div`
@@ -15,7 +17,7 @@ export const Tab = styled.div`
     justify-content: center;
     width: 100px;
     height: 100%;
-    background-color: royalblue;
+    background-color: ${props=>props.color?"royalblue":"#97BEF1"};
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     align-items: center;
