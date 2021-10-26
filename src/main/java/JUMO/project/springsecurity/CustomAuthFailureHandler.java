@@ -1,4 +1,4 @@
-package JUMO.project;
+package JUMO.project.springsecurity;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.AuthenticationException;

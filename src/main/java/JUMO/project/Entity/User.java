@@ -36,11 +36,12 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Holding> holdings = new ArrayList<>();
 
+
     public static User createUser(String id, String password){
         User user = new User();
         user.setId(id);
         user.setPassword(password);
-        user.setBalance(0L);
+        user.setBalance(1000000L);
         return user;
     }
 
@@ -53,11 +54,20 @@ public class User implements UserDetails {
     }
 
     @Override
-
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<GrantedAuthority> roles = new HashSet<>();
         roles.add(new SimpleGrantedAuthority("ROLE_USER"));
         return roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", id='" + id + '\'' +
+                ", password='" + password + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 
     @Override

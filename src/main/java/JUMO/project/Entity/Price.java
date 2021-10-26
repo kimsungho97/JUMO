@@ -1,7 +1,7 @@
 package JUMO.project.Entity;
 
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,21 +10,18 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Embeddable
 class pricePK implements Serializable{
+
     @Column(name="name")
     private String name;
 
     @Column(name="time")
     private LocalDateTime time;
 
-    public pricePK(String name, LocalDateTime time){
-        this.name=name;
-        this.time=time;
-    }
 
     public boolean equals(pricePK pricePK){
         if(this.name.equals(pricePK.getName()) && this.time.equals(pricePK.getTime())){
@@ -41,29 +38,29 @@ class pricePK implements Serializable{
 @Table(name="price")
 @Embeddable
 public class Price implements Comparable<Price>{
-    @EmbeddedId
+    @EmbeddedId @Id
     private pricePK id;
 
     @Column(name="code")
     private String code;
 
     @Column(name="High")
-    private long High;
+    private Long high;
 
     @Column(name="Low")
-    private long Low;
+    private Long low;
 
     @Column(name="Open")
-    private long open;
+    private Long open;
 
     @Column(name="Close")
-    private long close;
+    private Long close;
 
     @Column(name="Volume")
-    private long Volume;
+    private Long volume;
 
     @Column(name="AdjClose")
-    private Long adjclose;
+    private Long adjClose;
 
 
     public String getName(){
