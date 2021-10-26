@@ -16,17 +16,26 @@ export default function SimulateContainer({ history }) {
     return (
         <>
             <TabBar>
-                <Tab onClick={() => { setTabMenu("myInfo") }}>
+                <Tab
+                    color={tabMenu==="myInfo"}
+                    onClick={() => { setTabMenu("myInfo") }}
+                >
                     <TabSpan>
                         보유 내역
                     </TabSpan>
                 </Tab>
-                <Tab onClick={() => { setTabMenu("history") }}>
+                <Tab
+                    color={tabMenu==="history"}
+                    onClick={() => { setTabMenu("history") }}
+                >
                     <TabSpan>
                         거래 내역
                     </TabSpan>
                 </Tab>
-                <Tab onClick={() => { setTabMenu("trade") }}>
+                <Tab
+                    color={tabMenu==="trade"}
+                    onClick={() => { setTabMenu("trade") }}
+                >
                     <TabSpan>
                         매수/매도
                     </TabSpan>

@@ -1,8 +1,9 @@
 import React from "react";
-import { Holding, HoldingInner, HoldingTable, Info, InfoInner, Inner, TableHeader, Title } from "./style";
+import { StockTable } from "../ChartListContainer/style";
+import { Holding, HoldingInner, HoldingTable, Info, InfoInner, Inner, TableData, TableHeader, Title } from "./style";
 
 export default function SimulateMyInfo() {
-    const holding = fetchHolding("id");
+    const holdings = fetchHolding("id");
 
 
 
@@ -29,21 +30,55 @@ export default function SimulateMyInfo() {
                                     종목명
                                 </TableHeader>
                                 <TableHeader width={150}>
-                                    종목코드
+                                    평가손익
                                 </TableHeader>
                                 <TableHeader width={100}>
+                                    수익률
+                                </TableHeader>
+                                <TableHeader width={150}>
                                     잔고수량
                                 </TableHeader>
                                 <TableHeader width={150}>
                                     평가금액
                                 </TableHeader>
                                 <TableHeader width={150}>
-                                    매입가
+                                    평균매입가
                                 </TableHeader>
-                                <TableHeader width={150}>
+                                <TableHeader width={170}>
                                     현재가
                                 </TableHeader>
                             </tr>
+
+                            {
+                                holdings.map((holding) => {
+                                    return (
+                                        <tr>
+                                            <TableData>
+                                                {holding["name"]}
+                                            </TableData>
+                                            <TableData>
+                                                {holding["valuation loss"].toLocaleString("ko-KR")}
+                                            </TableData>
+                                            <TableData>
+                                                {holding["yield"].toLocaleString("ko-KR")}%
+                                            </TableData>
+                                            <TableData>
+                                                {holding["remaining amount"].toLocaleString("ko-KR")}
+                                            </TableData>
+                                            <TableData>
+                                                {holding["valuation amount"].toLocaleString("ko-KR")}
+                                            </TableData>
+                                            <TableData>
+                                                {holding["average purchase price"].toLocaleString("ko-KR")}
+                                            </TableData>
+                                            <TableData>
+                                                {holding["current price"].toLocaleString("ko-KR")}
+                                            </TableData>
+                                        </tr>
+                                    )
+                                })
+                            }
+
                         </tbody>
                     </HoldingTable>
                 </HoldingInner>
@@ -56,12 +91,22 @@ export default function SimulateMyInfo() {
 function fetchHolding(id) {
     return [
         {
-            "name": "삼성",
-            "code": "0000.KS",
-            "count": 5,          //주식 개수
-            "evaluation": 800000,//현재가 X count
-            "buy": 100000,        //매입가
-            "current": 160000   //현재가
+            "name": "LG",                       //종목명
+            "valuation loss": -168536,          //평가손익
+            "yield": -16.5,                     //수익률
+            "remaining amount": 9,              //잔고수량
+            "valuation amount": 855000,         //평가금액
+            "average purchase price": 113500,   //평균매입가
+            "current price": 95000              //현재가
+        },
+         {
+            "name": "LX홀딩스",                       //종목명
+            "valuation loss": -65865,          //평가손익
+            "yield": -64.64,                     //수익률
+            "remaining amount": 4,              //잔고수량
+            "valuation amount": 35560,         //평가금액
+            "average purchase price": 25086,   //평균매입가
+            "current price": 8890              //현재가
         }
     ]
 }

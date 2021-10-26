@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import HighChart from "../Chart";
 import { ChartView, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
 
-export default function ChartContainer({ history }) {
+export default function ChartContainer() {
     const stockCode = new URLSearchParams(window.location.search).get("stockCode");
     const stockName = "삼성";
     let data = fetchChartData(stockCode);
