@@ -7,6 +7,7 @@ import { Chart, ChartList, Home, Login, Signup } from "./pages";
 import Simulate from "./pages/simulate";
 
 function App() {
+  config();
   return (
     <RecoilRoot>
       <BrowserRouter>

@@ -1,12 +1,17 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import { fetchChartList } from "../../hooks/useChart";
 import LinkTo from "../../hooks/useLink";
 import { SearchBar, SearchBarInput, SearchBarlbl, StockTable, StockTableData, StockTableHeader, StockTableRow } from "./style";
 
 export default function ChartListContainer({ history }) {
     const [stockName, setStockName] = useState('');
     const [stockCode, setStockCode] = useState('');
-
-    const data = fetchChartList();
+    const [data, setData] = useState([]);
+    useEffect(async () => {
+        setData(await fetchChartList());
+    },[])
+    
+    
     return (
         <>
             <SearchBar>
@@ -42,13 +47,13 @@ export default function ChartListContainer({ history }) {
                             return (
                                 <StockTableRow display={rowFiltered(stock,stockName,stockCode) }>
                                     <StockTableData>
-                                        {stock.name}
+                                        {stock.stockName}
                                     </StockTableData>
                                     <StockTableData>
                                         {stock.code}
                                     </StockTableData>
                                     <StockTableData>
-                                        <a onClick={(e)=>LinkTo(e,history,`/chart?stockCode=${stock.code}`)}>
+                                        <a onClick={(e)=>LinkTo(e,history,`/chart?stockName=${stock.stockName}&stockCode=${stock.code}`)}>
                                             차트보기
                                         </a>
                                     </StockTableData>
@@ -65,15 +70,8 @@ export default function ChartListContainer({ history }) {
     )
 }
 
-function fetchChartList() {
-    return [
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" }
-    ];
-}
-
 const rowFiltered = (stock, name, code) => {
-    if (stock.name.indexOf(name) === -1 || stock.code.indexOf(code) === -1)
+    if (stock.stockName.indexOf(name) === -1 || stock.code.indexOf(code) === -1)
         return "none";
     else
         return "table-row";
