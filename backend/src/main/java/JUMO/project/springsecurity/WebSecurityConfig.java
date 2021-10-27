@@ -18,6 +18,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsUtils;
 
 @RequiredArgsConstructor
 @EnableWebSecurity // 1
@@ -57,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/login").hasRole("USER")
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/api/login", "/api/signup").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()

@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RequiredArgsConstructor
@@ -28,6 +29,10 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             // SecurityContext 에 Authentication 객체를 저장합니다.
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+        ((HttpServletResponse) response).setHeader("Access-Control-Allow-Origin", "*");
+        ((HttpServletResponse) response).setHeader("Access-Control-Allow-Credentials", "true");
+        ((HttpServletResponse) response).setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        ((HttpServletResponse) response).setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, X-AUTH-TOKEN");
         chain.doFilter(request, response);
     }
 }
