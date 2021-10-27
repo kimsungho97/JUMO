@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import HighStock from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
+import { fetchChartData } from '../../hooks/useChart';
 
-const config = (data) => {
-   
-    
+const config = (data) => {  
     // split the data set into ohlc and volume
     let ohlc = [],
         volume = [],
@@ -101,13 +100,22 @@ const config = (data) => {
         ]
     }
 }
-export default function HighChart({data}){
+export default function HighChart({stockName}){
+    const [configs, setConfigs] = useState({});
+    const loadData = async () => {
+            const result = await fetchChartData(stockName);
+            setConfigs(config(result));
+    }
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return (
         <div className="App">
            <HighchartsReact
                highcharts={HighStock}
                constructorType={"stockChart"}
-                options={config(data)} />
+                options={configs} />
         </div>
     )
 }

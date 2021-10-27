@@ -1,4 +1,5 @@
-export default function LinkTo(event, history,url) {
-    event.preventDefault();
+export default function LinkTo(event, history, url) {
+    if(event)
+        event.preventDefault();
     history.push(url);
 }

@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useRef } from "react";
 import LinkTo from "../../hooks/useLink";
 import { BtnWrapper, FormHead, FormHeadLogo, FormRow, Input, Btn, LoginForm } from "./style";
+import { fetchLogin } from "../../hooks/useLogin";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userAtom } from "../../store/user";
+import { setCookie } from "../../hooks/cookie";
+import axios from "axios";
 
-export default function LoginContainer({history}) {
+export default function LoginContainer({ history }) {
+    const setUser = useSetRecoilState(userAtom);
+    const idInput = useRef(null);
+    const pwInput = useRef(null);
+
     return (
         <LoginForm>
             <FormHeadLogo onClick={(e) => LinkTo(e, history, "/")}>JUMO</FormHeadLogo>
             <FormHead>로그인</FormHead>
             <FormRow>
                 <Input
+                    ref={idInput}
                     type={"text"}
                     name={"id"}
                     placeholder={"아이디"}
@@ -18,14 +28,23 @@ export default function LoginContainer({history}) {
             </FormRow>
             <FormRow>
                 <Input
-                    type={"text"}
+                    ref={pwInput}
+                    type={"password"}
                     name={"password"}
                     placeholder={"비밀번호"}
                     required=""
                 />
             </FormRow>
             <BtnWrapper>
-                <Btn backgroundColor={"royalblue"}>
+                <Btn backgroundColor={"royalblue"}
+                    onClick={async (event) => {
+                        event.preventDefault();
+                        const result = await fetchLogin(idInput.current.value, pwInput.current.value);
+                        if (result.result)
+                            successLogin(result, idInput.current.value, setUser, history);
+                        else failLogin();
+                    }
+                }>
                     로그인
                 </Btn>
             </BtnWrapper>
@@ -36,4 +55,16 @@ export default function LoginContainer({history}) {
             </BtnWrapper>
         </LoginForm>
     )
+}
+
+
+function successLogin({balance, token},id ,setUser, history) {
+    setUser({ balance, id });
+    setCookie("token", token, []);
+    axios.defaults.headers.common["X-AUTH-TOKEN"] = token;
+    LinkTo(null, history, "/");
+}
+
+function failLogin() {
+    alert("계정 정보가 일치하지 않습니다.");
 }
