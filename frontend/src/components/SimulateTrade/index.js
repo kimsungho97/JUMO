@@ -1,19 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { fetchChartList } from "../../hooks/useChart";
+import { fetchTrade } from "../../hooks/useTrade";
 import HighChart from "../Chart";
 
 import { AmountInput, Chart, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, ToggleBtn, Trade, TradeToggle } from "./style";
 
 export default function SimulateTrade() {
-    const [curStock, setCurStock] = useState({ name: "삼성", code: "003460.KS" });
+    const ChartRef = useRef(null);
+    const [curStock, setCurStock] = useState({ name: "삼성전자", code: "003460.KS" });
     const [stockName, setStockName] = useState("");
     const [type, setType] = useState("buy");
+    const [amount, setAmount] = useState(0);
     const [total, setTotal] = useState(1);
     const [currentPrice, setCurrentPrice] = useState(700000);
-    const stockList = fetchChartList();
-    
+    const [stockList, setStockList] = useState([]);
+
     useEffect(() => {
+        async function setStocks() {
+            const stocks = await fetchChartList();
+            setStockList(stocks);
+        }
+        setStocks();
         document.addEventListener("click", candleColorChange);
         candleColorChange();
+        
         return () => {
             document.removeEventListener("click", candleColorChange);
         }
@@ -33,12 +43,12 @@ export default function SimulateTrade() {
                             return (
                                 <ChartListData
                                     key={index}
-                                    display={rowFiltered(stock.name, stockName)}
+                                    display={rowFiltered(stock.stockName, stockName)}
                                     value={stock.name}
-                                    onClick={(e) => setCurStock({ name: stock.name, code: stock.code })}
+                                    onClick={(e) => setCurStock({ name: stock.stockName, code: stock.code })}
                                 >
                                     <ChartListName>
-                                        {stock.name}
+                                        {stock.stockName}
                                     </ChartListName>
                                     <ChartListCode>
                                         {stock.code}
@@ -52,7 +62,7 @@ export default function SimulateTrade() {
 
             <Chart>
                 <ChartTitle>{curStock.name}</ChartTitle>
-                <HighChart stockName={curStock.name}/>
+                <HighChart stockName={curStock.name} ref={ChartRef}/>
             </Chart>
 
             <Trade>
@@ -82,7 +92,11 @@ export default function SimulateTrade() {
                 <label>수량</label>
                 <AmountInput
                     type={"number"}
-                    onChange={(e)=>setTotal(e.target.value*currentPrice)}
+                    value={amount}
+                    onChange={(e) => {
+                        setAmount(parseInt(e.target.value));
+                        setTotal(e.target.value * currentPrice)
+                    }}
                 />
                 
                 <label>총액</label>
@@ -90,10 +104,12 @@ export default function SimulateTrade() {
                 <OrderBtn
                     onClick={(e) => {
                         e.preventDefault();
+                        fetchTrade(type, curStock.name, curStock.code, amount);
                     }}
                 >
                     주문
                 </OrderBtn>
+                
             </Trade>
         </Inner>
     )
@@ -114,32 +130,6 @@ function candleColorChange() {
     })
 }
 
-
-function fetchChartList() {
-    return [
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-        { name: "삼성", code: "003460.KS" },
-        { name: "LG", code: "003460.KS" },
-
-    ];
-}
 
 const rowFiltered = (stockName, name) => {
     if (stockName.indexOf(name) === -1)

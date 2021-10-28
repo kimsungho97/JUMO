@@ -100,23 +100,23 @@ const config = (data) => {
         ]
     }
 }
-export default function HighChart({stockName}){
+export default function HighChart({ stockName }) {
     const [configs, setConfigs] = useState([]);
 
     useEffect(() => {
         async function loadData() {
-                const result = await fetchChartData(stockName);
-                setConfigs(config(result));
+            const result = await fetchChartData(stockName);
+            setConfigs(config(result));
         }
         loadData();
     }, []);
 
     return (
-        <div className="App">
-           <HighchartsReact
-               highcharts={HighStock}
-               constructorType={"stockChart"}
+        <>
+        <HighchartsReact
+            highcharts={HighStock}
+            constructorType={"stockChart"}
                 options={configs} />
-        </div>
+        </>
     )
 }

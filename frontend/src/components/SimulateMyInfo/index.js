@@ -62,25 +62,25 @@ export default function SimulateMyInfo() {
                                     return (
                                         <tr>
                                             <TableData>
-                                                {holding["name"]}
+                                                {holding.name}
                                             </TableData>
                                             <TableData>
-                                                {holding["valuation loss"].toLocaleString("ko-KR")}
+                                                {holding.valuationLoss.toString().toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding["yield"].toLocaleString("ko-KR")}%
+                                                {holding.yield.toString().toLocaleString("ko-KR")}%
                                             </TableData>
                                             <TableData>
-                                                {holding["remaining amount"].toLocaleString("ko-KR")}
+                                                {holding.remainingAmount.toString().toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding["valuation amount"].toLocaleString("ko-KR")}
+                                                {holding.valuationAmount.toString().toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding["average purchase price"].toLocaleString("ko-KR")}
+                                                {holding.averagePurchasePrice.toString().toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding["current price"].toLocaleString("ko-KR")}
+                                                {holding.currentPrice.toString().toLocaleString("ko-KR")}
                                             </TableData>
                                         </tr>
                                     )
