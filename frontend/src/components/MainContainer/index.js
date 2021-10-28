@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import LinkTo from "../../hooks/useLink";
 import { CheckChartBtn,CheckPriceBtn, CheckPrice, ExplainPrice, SubExplain, ViewPrice, SubInfo, ViewChart, ExplainChart } from "./style";
 

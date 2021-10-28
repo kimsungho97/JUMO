@@ -80,3 +80,36 @@ export const ChartTitle = styled.div`
     height: 50px;
     width: 100%;
 `
+
+export const Trade = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 100%;
+    text-align: center;
+`
+
+export const AmountInput = styled.input`
+
+`
+
+export const TradeToggle = styled.div`
+    width: 200px;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+`
+
+export const ToggleBtn = styled.button`
+    position: relative;
+    width: 50%;
+    height: 100%;
+    background-color: ${props => props.color};
+`
+
+export const OrderBtn = styled.button`
+    width: 50px;
+    height: 50px;
+    
+`

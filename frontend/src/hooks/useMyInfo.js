@@ -12,3 +12,17 @@ export async function fetchHolding(id) {
     console.log(res)
     return res;
 }
+
+
+export async function fetchHistory(id) {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "GET",
+        url: `${url}/api/history`,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })).data.data;
+    console.log(res)
+    return res;
+}

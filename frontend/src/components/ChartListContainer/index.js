@@ -7,8 +7,13 @@ export default function ChartListContainer({ history }) {
     const [stockName, setStockName] = useState('');
     const [stockCode, setStockCode] = useState('');
     const [data, setData] = useState([]);
-    useEffect(async () => {
-        setData(await fetchChartList());
+    useEffect(() => {
+        async function setChartList(){
+            const chartList = await fetchChartList();
+            setData(chartList);
+        }
+        
+        setChartList();
     },[])
     
     
@@ -43,9 +48,9 @@ export default function ChartListContainer({ history }) {
                     </tr>
 
                     {
-                        data.map((stock) => {
+                        data.map((stock, index) => {
                             return (
-                                <StockTableRow display={rowFiltered(stock,stockName,stockCode) }>
+                                <StockTableRow key={index} display={rowFiltered(stock,stockName,stockCode) }>
                                     <StockTableData>
                                         {stock.stockName}
                                     </StockTableData>

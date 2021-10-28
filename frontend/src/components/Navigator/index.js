@@ -31,13 +31,17 @@ export default function Navigator({history}) {
                 <SubMenu>
                     <Menu>
                         {
-                            menuList.map(menu => 
-                                <MenuDetail>
-                                    <MenuAnchor onClick={(e)=>LinkTo(e,history,menu.href)}>
-                                        {menu.name}
-                                    </MenuAnchor>
-                                </MenuDetail>
-                            )
+                            menuList.map((menu,index) => {
+                                const name = menu.name;
+                                const href = menu.href;
+                                return (
+                                    <MenuDetail key={index}>
+                                        <MenuAnchor  onClick={(e) => LinkTo(e, history, href)}>
+                                            {name}
+                                        </MenuAnchor>
+                                    </MenuDetail>
+                                );
+                            })
                         }
                     </Menu>
                 </SubMenu>

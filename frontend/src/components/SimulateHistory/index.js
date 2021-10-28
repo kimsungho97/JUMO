@@ -28,9 +28,9 @@ export default function SimulateHistory() {
                             </TableHeader>
                         </tr>
                         {
-                            histories.map((history) => {
+                            histories.map((history, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <TableData>
                                             {history["date"]}
                                         </TableData>

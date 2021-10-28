@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import HighChart from "../Chart";
 import { ChartView, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
 
@@ -9,13 +9,14 @@ export default function ChartContainer() {
     const shortTermResult = "매수";
     const longTermResult = "매수";
     
-    useEffect(async () => {
+    useEffect(() => {
         document.addEventListener("click", candleColorChange);
         candleColorChange();
         return () => {
             document.removeEventListener("click", candleColorChange);
         }
-    }, [candleColorChange])
+    }, []);
+
    
     return (
         <>

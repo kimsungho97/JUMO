@@ -101,12 +101,13 @@ const config = (data) => {
     }
 }
 export default function HighChart({stockName}){
-    const [configs, setConfigs] = useState({});
-    const loadData = async () => {
-            const result = await fetchChartData(stockName);
-            setConfigs(config(result));
-    }
+    const [configs, setConfigs] = useState([]);
+
     useEffect(() => {
+        async function loadData() {
+                const result = await fetchChartData(stockName);
+                setConfigs(config(result));
+        }
         loadData();
     }, []);
 

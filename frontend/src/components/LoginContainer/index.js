@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import LinkTo from "../../hooks/useLink";
 import { BtnWrapper, FormHead, FormHeadLogo, FormRow, Input, Btn, LoginForm } from "./style";
 import { fetchLogin } from "../../hooks/useLogin";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userAtom } from "../../store/user";
 import { setCookie } from "../../hooks/cookie";
 import axios from "axios";
