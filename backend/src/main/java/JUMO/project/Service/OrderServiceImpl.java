@@ -8,6 +8,7 @@ import JUMO.project.Repository.HoldingRepository;
 import JUMO.project.Repository.OrderRepository;
 import JUMO.project.Repository.UserRepository;
 import JUMO.project.exception.NoHoldingException;
+import JUMO.project.exception.NotEnoughHoldingException;
 import JUMO.project.exception.NotEnoughMoneyException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +37,7 @@ public class OrderServiceImpl implements OrderService{
     String url = "http://localhost:5000";
 
     @Override
-    public void buyingOrder(Long uid, String stockId, String stockName, Integer count) {
+    public void buyingOrder(Long uid, String stockId, String stockName, Integer count) throws NotEnoughMoneyException{
 
         Long stockPrice = getStockPrice(stockId);
 
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService{
 
 
     @Override
-    public void sellingOrder(Long uid, String stockId, String stockName, Integer count) {
+    public void sellingOrder(Long uid, String stockId, String stockName, Integer count) throws NotEnoughHoldingException, NoHoldingException {
 
         Long stockPrice = getStockPrice(stockId);
 
