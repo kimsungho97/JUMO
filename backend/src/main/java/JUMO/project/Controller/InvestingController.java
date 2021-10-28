@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class investingController {
+public class InvestingController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final HoldingService holdingService;
