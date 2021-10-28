@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useRecoilValue } from "recoil";
 import LinkTo from "../../hooks/useLink";
 import { userAtom } from "../../store/user";
@@ -15,12 +15,13 @@ export default function Navigator({history}) {
         { name: "내정보", href: "/userinfo" },
         { name: "로그아웃", href: "/logout" },
     ];
-    let menuList = unLoginedMenu
-
+    const [menuList, setMenuList] = useState(LoginedMenu);
     
     useEffect(() => {
-        if (userInfo.userId !== undefined)
-            menuList = LoginedMenu;
+        if (userInfo.userId === undefined)
+            setMenuList(unLoginedMenu);
+        else
+            setMenuList(LoginedMenu);
     }, [])
 
     return (

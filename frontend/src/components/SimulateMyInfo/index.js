@@ -1,9 +1,17 @@
-import React from "react";
-import { StockTable } from "../ChartListContainer/style";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { fetchHolding } from "../../hooks/useMyInfo";
+import { userAtom } from "../../store/user";
 import { Holding, HoldingInner, HoldingTable, Info, InfoInner, Inner, TableData, TableHeader, Title } from "./style";
 
 export default function SimulateMyInfo() {
-    const holdings = fetchHolding("id");
+    const [holdings, setHoldings] = useState([]);
+    const userInfo = useRecoilValue(userAtom);
+    
+    useEffect(async () => {
+        setHoldings(await fetchHolding(userInfo.userId));
+    }, [])
+    
 
 
 
@@ -86,27 +94,4 @@ export default function SimulateMyInfo() {
         </Inner>
     )
 
-}
-
-function fetchHolding(id) {
-    return [
-        {
-            "name": "LG",                       //종목명
-            "valuation loss": -168536,          //평가손익
-            "yield": -16.5,                     //수익률
-            "remaining amount": 9,              //잔고수량
-            "valuation amount": 855000,         //평가금액
-            "average purchase price": 113500,   //평균매입가
-            "current price": 95000              //현재가
-        },
-         {
-            "name": "LX홀딩스",                       //종목명
-            "valuation loss": -65865,          //평가손익
-            "yield": -64.64,                     //수익률
-            "remaining amount": 4,              //잔고수량
-            "valuation amount": 35560,         //평가금액
-            "average purchase price": 25086,   //평균매입가
-            "current price": 8890              //현재가
-        }
-    ]
 }

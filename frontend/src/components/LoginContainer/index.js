@@ -59,7 +59,7 @@ export default function LoginContainer({ history }) {
 
 
 function successLogin({balance, token},id ,setUser, history) {
-    setUser({ balance, id });
+    setUser({ balance, userId: id });
     setCookie("token", token, []);
     axios.defaults.headers.common["X-AUTH-TOKEN"] = token;
     LinkTo(null, history, "/");
