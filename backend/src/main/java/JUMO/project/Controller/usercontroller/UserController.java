@@ -54,6 +54,7 @@ public class UserController {
     @GetMapping("/userinfo")
     public UserInfoDTO userInfo(HttpServletRequest request, HttpServletResponse response){
         String token = jwtTokenProvider.resolveToken(request);
+        System.out.println(jwtTokenProvider.getUserUid(token));
         String userId = jwtTokenProvider.getUserId(token);
 
         Optional<User> userOptional = userRepository.findById(userId);
