@@ -62,7 +62,7 @@ public class Holding {
         this.averagePrice = this.volume / count;
     }
 
-    public void subjectCalHolding(Integer count, Long stockPrice) {
+    public void subjectCalHolding(Integer count, Long stockPrice) throws NotEnoughHoldingException{
         if (this.count - count < 0) {
             throw new NotEnoughHoldingException("sell more than user have");
         }
