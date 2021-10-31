@@ -9,7 +9,6 @@ export async function fetchHolding(id) {
             "Content-Type": "application/json"
         }
     })).data.data;
-    console.log(res)
     return res;
 }
 
@@ -23,6 +22,5 @@ export async function fetchHistory(id) {
             "Content-Type": "application/json"
         }
     })).data.data;
-    console.log(res)
     return res;
 }

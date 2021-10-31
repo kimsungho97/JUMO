@@ -15,3 +15,18 @@ export async function fetchLogin(id, password) {
     })).data;
     return res;
 }
+
+export async function fetchLogout(id) {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "POST",
+        url: `${url}/api/logout`,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        data: {
+            id
+        }
+    })).data;
+    return res;
+}
