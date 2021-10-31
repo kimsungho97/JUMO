@@ -6,13 +6,16 @@ import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.UserServiceImpl;
 import JUMO.project.springsecurity.JwtTokenProvider;
+import JUMO.project.springsecurity.LoginStatusManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,6 +28,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final LoginStatusManager loginStatusManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
@@ -33,11 +37,31 @@ public class UserController {
         Optional<User> findUser = userService.login(user.get("id"), user.get("password"));
         if (findUser.isPresent()){
             User member = findUser.get();
+            String token = jwtTokenProvider.createJwtAuthToken(member.getId(), member).get();
+            loginStatusManager.putLoginStatus(token);
             return new LoginResultDTO(
                 true, member.getId(), member.getBalance(),
-                null, jwtTokenProvider.createJwtAuthToken(member.getId(), member).get());
+                null, token);
         }
         return new LoginResultDTO(false, null, null, "failed login", null);
+    }
+
+    @PostMapping("/logout")
+    public Map<String, Object> logout(@RequestBody Map<String, String> model, HttpServletRequest request){
+        Map<String, Object> resModel = new HashMap<>();
+
+        String token = jwtTokenProvider.resolveToken(request);
+        log.info("user Logout [{}]", model.get("id"));
+
+        try {
+            loginStatusManager.removeLoginStatus(token);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            resModel.put("result", false);
+            return resModel;
+        }
+        resModel.put("result", true);
+        return resModel;
     }
     // 회원가입
     @PostMapping("/signup")

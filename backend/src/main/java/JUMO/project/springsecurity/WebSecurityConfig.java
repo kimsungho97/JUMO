@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
     private final UserServiceImpl user_service; // 3
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final LoginStatusManager loginStatusManager;
 
     private final CustomAuthFailureHandler customAuthFailureHandler;
 
@@ -62,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
                 .antMatchers("/api/login", "/api/signup").permitAll()
                 .anyRequest().hasRole("USER")
                 .and()
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, loginStatusManager),
                         UsernamePasswordAuthenticationFilter.class)
         ;
     }
@@ -86,5 +87,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { // 2
     public CustomAuthFailureHandler authFailureHandler(){
         return new CustomAuthFailureHandler();
     }
+
 }
 

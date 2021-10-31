@@ -59,7 +59,7 @@ public class Holding {
     public void addCalHolding(Integer count, Long stockPrice) {
         this.count += count;
         this.volume += stockPrice*count;
-        this.averagePrice = this.volume / count;
+        this.averagePrice = this.volume / this.count;
     }
 
     public void subjectCalHolding(Integer count, Long stockPrice) throws NotEnoughHoldingException{
@@ -68,7 +68,7 @@ public class Holding {
         }
         this.count -= count;
         this.volume -= stockPrice*count;
-        this.averagePrice = this.volume / count;
+        this.averagePrice = this.volume / this.count;
     }
 
 

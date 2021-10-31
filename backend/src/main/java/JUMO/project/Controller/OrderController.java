@@ -1,5 +1,7 @@
 package JUMO.project.Controller;
 
+import JUMO.project.Entity.Order;
+import JUMO.project.Repository.OrderRepository;
 import JUMO.project.Service.OrderService;
 import JUMO.project.exception.NoHoldingException;
 import JUMO.project.exception.NotEnoughHoldingException;
@@ -7,15 +9,14 @@ import JUMO.project.exception.NotEnoughMoneyException;
 import JUMO.project.springsecurity.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.ResourceAccessException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -26,6 +27,7 @@ public class OrderController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final OrderService orderService;
+    private final OrderRepository orderRepository;
 
     @PostMapping("/trade")
     public Map<String, Object> buyingOrder(@RequestBody Map<String, Object> model, HttpServletRequest request, HttpServletResponse response){
@@ -71,5 +73,26 @@ public class OrderController {
             responseModel.put("msg", "wrong request msg");
             return responseModel;
         }
+    }
+
+    @GetMapping("/history")
+    public Map<String, Object> orderHistory(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Long userUid = jwtTokenProvider.getUserUid(token);
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+
+        List<Order> historyList = orderRepository.findAllHistoryByUid(userUid);
+
+        for(Order order : historyList){
+            orderDTOList.add(new OrderDTO(order.getOrderDate().toLocalDate(),
+                    order.getStockName(),
+                    order.getStockId()+".KS",
+                    order.getCount(),
+                    order.getTradeType().toString(),
+                    order.getEachPrice()*order.getCount()));
+        }
+        Map<String, Object> resModel = new HashMap<>();
+        resModel.put("data", orderDTOList);
+        return resModel;
     }
 }
