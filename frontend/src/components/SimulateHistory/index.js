@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { fetchHistory } from "../../hooks/useMyInfo";
+import { userAtom } from "../../store/user";
 import { TableData } from "../SimulateMyInfo/style";
 import { HistoryInner, HistoryTable, Inner, TableHeader } from "./style";
 
 export default function SimulateHistory() {
-    const histories = fetchHistory("id");
+    const [histories, setHistories] = useState([]);
+    const userInfo = useRecoilValue(userAtom);
+    
+    useEffect(() => {
+        async function getHistory(userId) {
+            const data = await fetchHistory(userId);
+            setHistories(data);
+        }
+        getHistory(userInfo.userId);
+    }, [])
 
     return (
         <Inner>
@@ -32,19 +44,19 @@ export default function SimulateHistory() {
                                 return (
                                     <tr key={index}>
                                         <TableData>
-                                            {history["date"]}
+                                            {history.date}
                                         </TableData>
                                         <TableData>
-                                            {history["name"]}
+                                            {history.stockName}
                                         </TableData>
                                         <TableData>
-                                            {history["type"]}
+                                            {history.type}
                                         </TableData>
                                         <TableData>
-                                            {history["amount"].toLocaleString("ko-KR")}
+                                            {history.amount.toString().toLocaleString("ko-KR")}
                                         </TableData>
                                         <TableData>
-                                            {history["total"].toLocaleString("ko-KR")}
+                                            {history.total.toString().toLocaleString("ko-KR")}
                                         </TableData>
                                     </tr>
                                 )
@@ -55,24 +67,4 @@ export default function SimulateHistory() {
             </HistoryInner>
         </Inner>
     )    
-}
-
-
-function fetchHistory(id) {
-    return [
-        {
-            "date": "2021-10-26",
-            "name": "LG",
-            "type": "매수",
-            "amount": 9,
-            "total": 1200000,   
-        },
-         {
-            "date": "2021-10-26",
-            "name": "LG",
-            "type": "매도",
-            "amount": 9,
-            "total": 1200000,   
-        }
-    ]
 }

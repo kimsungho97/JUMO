@@ -6,8 +6,8 @@ import HighChart from "../Chart";
 import { AmountInput, Chart, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, ToggleBtn, Trade, TradeToggle } from "./style";
 
 export default function SimulateTrade() {
-    const ChartRef = useRef(null);
-    const [curStock, setCurStock] = useState({ name: "삼성전자", code: "003460.KS" });
+    const [curStockName, setCurStockName] = useState("동화약품");
+    const [curStockCode, setCurStockCode] = useState("000020.KS");
     const [stockName, setStockName] = useState("");
     const [type, setType] = useState("buy");
     const [amount, setAmount] = useState(0);
@@ -45,7 +45,11 @@ export default function SimulateTrade() {
                                     key={index}
                                     display={rowFiltered(stock.stockName, stockName)}
                                     value={stock.name}
-                                    onClick={(e) => setCurStock({ name: stock.stockName, code: stock.code })}
+                                    onClick={(e) => {
+                                        setCurStockName(stock.stockName);
+                                        setCurStockCode(stock.code);
+                                    }
+                                    }
                                 >
                                     <ChartListName>
                                         {stock.stockName}
@@ -60,10 +64,12 @@ export default function SimulateTrade() {
                 </ChartListGroup>
             </ChartList>            
 
+            
             <Chart>
-                <ChartTitle>{curStock.name}</ChartTitle>
-                <HighChart stockName={curStock.name} ref={ChartRef}/>
+                <ChartTitle>{curStockName}</ChartTitle>
+                <HighChart stockName={curStockName} />
             </Chart>
+            
 
             <Trade>
                 <TradeToggle>
@@ -104,7 +110,7 @@ export default function SimulateTrade() {
                 <OrderBtn
                     onClick={(e) => {
                         e.preventDefault();
-                        fetchTrade(type, curStock.name, curStock.code, amount);
+                        fetchTrade(type, curStockName, curStockCode, amount);
                     }}
                 >
                     주문

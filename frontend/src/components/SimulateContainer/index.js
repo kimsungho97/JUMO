@@ -17,7 +17,7 @@ export default function SimulateContainer({ history }) {
         <>
             <TabBar>
                 <Tab
-                    color={tabMenu==="myInfo"}
+                    color={(tabMenu==="myInfo").toString()}
                     onClick={() => { setTabMenu("myInfo") }}
                 >
                     <TabSpan>
@@ -25,7 +25,7 @@ export default function SimulateContainer({ history }) {
                     </TabSpan>
                 </Tab>
                 <Tab
-                    color={tabMenu==="history"}
+                    color={(tabMenu==="history").toString()}
                     onClick={() => { setTabMenu("history") }}
                 >
                     <TabSpan>
@@ -33,7 +33,7 @@ export default function SimulateContainer({ history }) {
                     </TabSpan>
                 </Tab>
                 <Tab
-                    color={tabMenu==="trade"}
+                    color={(tabMenu==="trade").toString()}
                     onClick={() => { setTabMenu("trade") }}
                 >
                     <TabSpan>

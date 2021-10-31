@@ -109,14 +109,15 @@ export default function HighChart({ stockName }) {
             setConfigs(config(result));
         }
         loadData();
-    }, []);
+    }, [stockName]);
 
     return (
-        <>
-        <HighchartsReact
-            highcharts={HighStock}
-            constructorType={"stockChart"}
-                options={configs} />
-        </>
+        
+            <HighchartsReact
+               highcharts={HighStock}
+               constructorType={"stockChart"}
+                options={configs}
+            />
+        
     )
 }

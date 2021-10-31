@@ -20,6 +20,10 @@ export const Logo = styled.a`
     background-image: url("/JUMO_logo.png");
     background-repeat: no-repeat;
     background-size:contain;
+
+    &:hover{
+        cursor: pointer;
+    }
 `
 
 export const SubMenu = styled.div`

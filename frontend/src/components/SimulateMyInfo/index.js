@@ -8,8 +8,12 @@ export default function SimulateMyInfo() {
     const [holdings, setHoldings] = useState([]);
     const userInfo = useRecoilValue(userAtom);
     
-    useEffect(async () => {
-        setHoldings(await fetchHolding(userInfo.userId));
+    useEffect(() => {
+        async function getHoldings() {
+            const holding = await fetchHolding(userInfo.userId);
+            setHoldings(holding);
+        }
+        getHoldings();
     }, [])
     
 
