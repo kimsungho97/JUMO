@@ -9,11 +9,13 @@ import JUMO.project.springsecurity.JwtTokenProvider;
 import JUMO.project.springsecurity.LoginStatusManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,6 +44,24 @@ public class UserController {
                 null, token);
         }
         return new LoginResultDTO(false, null, null, "failed login", null);
+    }
+
+    @PostMapping("/logout")
+    public Map<String, Object> logout(@RequestBody Map<String, String> model, HttpServletRequest request){
+        Map<String, Object> resModel = new HashMap<>();
+
+        String token = jwtTokenProvider.resolveToken(request);
+        log.info("user Logout [{}]", model.get("id"));
+
+        try {
+            loginStatusManager.removeLoginStatus(token);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            resModel.put("result", false);
+            return resModel;
+        }
+        resModel.put("result", true);
+        return resModel;
     }
     // 회원가입
     @PostMapping("/signup")
