@@ -6,6 +6,7 @@ import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
 import JUMO.project.Service.UserServiceImpl;
 import JUMO.project.springsecurity.JwtTokenProvider;
+import JUMO.project.springsecurity.LoginStatusManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
     private final JwtTokenProvider jwtTokenProvider;
+    private final LoginStatusManager loginStatusManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
@@ -33,9 +35,11 @@ public class UserController {
         Optional<User> findUser = userService.login(user.get("id"), user.get("password"));
         if (findUser.isPresent()){
             User member = findUser.get();
+            String token = jwtTokenProvider.createJwtAuthToken(member.getId(), member).get();
+            loginStatusManager.putLoginStatus(token);
             return new LoginResultDTO(
                 true, member.getId(), member.getBalance(),
-                null, jwtTokenProvider.createJwtAuthToken(member.getId(), member).get());
+                null, token);
         }
         return new LoginResultDTO(false, null, null, "failed login", null);
     }
