@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService{
         order.changeTradeType(TradeType.SELL);
         orderRepository.save(order);
 
-        // TODO: 주문하는 주식 지갑 없으면 에러 발생
+        // 주문하는 주식 지갑 없으면 에러 발생
         List<Holding> holdings = holdingRepository.findHoldingByUidStockId(user.getUid(), stockId);
         if (holdings.isEmpty()) {
             throw new NoHoldingException("have no holding but sell");
