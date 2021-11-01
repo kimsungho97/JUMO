@@ -4,6 +4,7 @@ package JUMO.project.Controller;
 import JUMO.project.Entity.Price;
 import JUMO.project.Repository.PriceRepository;
 import JUMO.project.Repository.StockInfoDTO;
+import JUMO.project.Service.OrderService;
 import JUMO.project.Service.PredictService;
 import JUMO.project.Service.PriceService;
 import JUMO.project.Service.UserServiceImpl;
@@ -23,11 +24,12 @@ import java.util.Map;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @Slf4j
-public class stockController {
+public class StockController {
 
     private final PredictService predictService;
     private final PriceRepository priceRepository;
     private final PriceService priceService;
+    private final OrderService orderService;
 
     @GetMapping("/chartlist")
     public Map<String, List<StockInfoDTO>> chartList(){
@@ -75,5 +77,14 @@ public class stockController {
         Map<String, Object> model = new HashMap<>();
         model.put("data", recommendResult);
         return model;
+    }
+
+    @GetMapping("/stockprice")
+    public Map<String, Object> getStockPrice(@RequestParam String stockId){
+        String processedStockId = stockId.substring(0,stockId.length()-3);
+        Long price = orderService.getStockPrice(processedStockId);
+        Map<String, Object> resModel = new HashMap<>();
+        resModel.put("price", price);
+        return resModel;
     }
 }
