@@ -99,6 +99,11 @@ public class OrderServiceImpl implements OrderService{
         // 지갑 존재하면 불러오기 및 지갑 갱신
         Holding holding = holdings.get(0);
         holding.subjectCalHolding(count, stockPrice);
+        if (holding.getCount() == 0){
+            holdingRepository.deleteHoldingByUidStockCode(user.getUid(), stockId);
+        }
+
+
         // order 객체 생성 및 영속화
         Order order = Order.createOrder(user, stockId, stockName, stockPrice, count);
         order.changeTradeType(TradeType.SELL);
