@@ -25,3 +25,16 @@ export async function fetchChartData(stockName) {
     
     return res.data
 }
+
+export async function fetchPrediction(stockName) {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "GET",
+        url: `${url}/api/prediction?stockName=${stockName}`,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })).data.data;
+    
+    return res;
+}

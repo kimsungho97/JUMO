@@ -1,4 +1,5 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
+import { fetchPrediction } from "../../hooks/useChart";
 import HighChart from "../Chart";
 import { ChartView, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
 
@@ -6,12 +7,22 @@ export default function ChartContainer() {
     const stockName = new URLSearchParams(window.location.search).get("stockName");
     const stockCode = new URLSearchParams(window.location.search).get("stockCode");
 
-    const shortTermResult = "매수";
-    const longTermResult = "매수";
+    const [longResult,setLongReseult] = useState("");
+    const [shortResult,setShortReseult] = useState("");
+
+
     
     useEffect(() => {
+        async function getPredictions(stockName) {
+            const result = await fetchPrediction(stockName);
+            setLongReseult(result[0]);
+            setShortReseult(result[1]);
+        }
+        getPredictions(stockName);
+
         document.addEventListener("click", candleColorChange);
         candleColorChange();
+
         return () => {
             document.removeEventListener("click", candleColorChange);
         }
@@ -37,12 +48,12 @@ export default function ChartContainer() {
 
                     <PredictionDiv>
                         <PredictionSpan>Short Term Prediction</PredictionSpan>
-                        <PredictionResult>{shortTermResult}</PredictionResult>
+                        <PredictionResult>{shortResult}</PredictionResult>
                     </PredictionDiv>
 
                     <PredictionDiv>
                         <PredictionSpan>Long Term Prediction</PredictionSpan>
-                        <PredictionResult>{longTermResult}</PredictionResult>
+                        <PredictionResult>{longResult}</PredictionResult>
                     </PredictionDiv>
                 </PredictionTitle>
             </PredictionInfo>

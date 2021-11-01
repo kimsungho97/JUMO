@@ -53,10 +53,10 @@ export default function SimulateHistory() {
                                             {history.type}
                                         </TableData>
                                         <TableData>
-                                            {history.amount.toString().toLocaleString("ko-KR")}
+                                            {history.amount.toLocaleString("ko-KR")}
                                         </TableData>
                                         <TableData>
-                                            {history.total.toString().toLocaleString("ko-KR")}
+                                            {history.total.toLocaleString("ko-KR")}
                                         </TableData>
                                     </tr>
                                 )

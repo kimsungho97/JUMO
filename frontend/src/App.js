@@ -1,11 +1,10 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { config } from "dotenv";
-import { RecoilRoot, useRecoilValue } from 'recoil';
-import './reset.css';
-import { Chart, ChartList, Home, Login, Signup } from "./pages";
-import Simulate from "./pages/simulate";
+import { RecoilRoot } from 'recoil';
+import { Chart, ChartList, Home, Login, MyPage, Signup, Simulate } from "./pages";
 import { RouteIf } from "./Route";
+import './reset.css';
 
 function App() {
   config();
@@ -15,7 +14,8 @@ function App() {
       <BrowserRouter>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup}/>
+        <Route exact path="/signup" component={Signup} />
+        <RouteIf exact path="/userinfo" component={MyPage}/>
         <RouteIf exact path="/chartList" component={ChartList}/>
         <RouteIf exact path="/simulate" component={Simulate}/>
         <RouteIf path="/chart" component={Chart}/>

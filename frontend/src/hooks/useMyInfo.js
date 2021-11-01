@@ -24,3 +24,15 @@ export async function fetchHistory(id) {
     })).data.data;
     return res;
 }
+
+export async function fetchReset() {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "POST",
+        url: `${url}/api/resetuser`,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })).status;
+    return res;
+}

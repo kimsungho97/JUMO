@@ -108,9 +108,17 @@ export default function SimulateTrade() {
                 <label>총액</label>
                 <span>{total.toLocaleString("ko-KR")}</span>
                 <OrderBtn
-                    onClick={(e) => {
+                    onClick={async (e) => {
                         e.preventDefault();
-                        fetchTrade(type, curStockName, curStockCode, amount);
+                        const result = await fetchTrade(type, curStockName, curStockCode, amount);
+                        console.log(result);
+                        if (result.result === false) {
+                            alert(result.msg);
+                        }
+                        else {
+                            alert("거래가 체결되었습니다.");
+                            setAmount(0);
+                        }
                     }}
                 >
                     주문

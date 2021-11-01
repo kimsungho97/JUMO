@@ -69,22 +69,22 @@ export default function SimulateMyInfo() {
                                                 {holding.name}
                                             </TableData>
                                             <TableData>
-                                                {holding.valuationLoss.toString().toLocaleString("ko-KR")}
+                                                {holding.valuationLoss.toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding.yield.toString().toLocaleString("ko-KR")}%
+                                                {holding.yield.toFixed(2).toLocaleString("ko-KR")}%
                                             </TableData>
                                             <TableData>
-                                                {holding.remainingAmount.toString().toLocaleString("ko-KR")}
+                                                {holding.remainingAmount.toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding.valuationAmount.toString().toLocaleString("ko-KR")}
+                                                {holding.valuationAmount.toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding.averagePurchasePrice.toString().toLocaleString("ko-KR")}
+                                                {holding.averagePurchasePrice.toLocaleString("ko-KR")}
                                             </TableData>
                                             <TableData>
-                                                {holding.currentPrice.toString().toLocaleString("ko-KR")}
+                                                {holding.currentPrice.toLocaleString("ko-KR")}
                                             </TableData>
                                         </tr>
                                     )
