@@ -12,4 +12,5 @@ public interface HoldingRepository {
     public void save(Holding holding);
     public List<Holding> findByUserId(Long uid);
     public List<Holding> findHoldingByUidStockId(Long uid, String stockId);
+    public void deleteAll(Long uid);
 }

@@ -34,4 +34,11 @@ public class HoldingRepositoryImpl implements HoldingRepository {
         return em.createQuery("select h from Holding h join h.user where h.stockId =: stockId",Holding.class).
                 setParameter("stockId", stockId).getResultList();
     }
+
+    @Override
+    public void deleteAll(Long uid) {
+        em.createQuery("delete from Holding h where h.user.uid = :uid")
+                .setParameter("uid", uid)
+                .executeUpdate();
+    }
 }
