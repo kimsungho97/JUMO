@@ -1,5 +1,6 @@
 package JUMO.project.Service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 public class PredictServiceImpl implements PredictService{
 
@@ -38,10 +40,10 @@ public class PredictServiceImpl implements PredictService{
             return retList;
         }
         catch (Exception e){
+            log.error(e.getMessage());
             ArrayList<String> retList = new ArrayList<>();
-            retList.add("미응답");
-            retList.add("미응답");
-            return retList;
-        }
+            retList.add("error");
+            retList.add("error");
+            return retList;        }
     }
 }

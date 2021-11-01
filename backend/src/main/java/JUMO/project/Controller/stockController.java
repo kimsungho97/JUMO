@@ -25,8 +25,6 @@ import java.util.Map;
 @Slf4j
 public class stockController {
 
-    private final PriceService price_service;
-    private final UserServiceImpl user_service;
     private final PredictService predictService;
     private final PriceRepository priceRepository;
     private final PriceService priceService;
@@ -68,5 +66,14 @@ public class stockController {
         resMap.put("data", ohlcRowList);
 
         return resMap;
+    }
+
+    @GetMapping("/prediction")
+    public Map<String, Object> getPredict(@RequestParam String stockName){
+        ArrayList<String> recommendResult = predictService.getRecommend(stockName);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("data", recommendResult);
+        return model;
     }
 }

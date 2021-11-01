@@ -23,7 +23,7 @@ public class HoldingRepositoryImpl implements HoldingRepository {
 
     @Override
     public List<Holding> findByUserId(Long uid) {
-        return em.createQuery("SELECT h from Holding h join fetch h.user where h.user.uid = :uid", Holding.class)
+        return em.createQuery("SELECT h from Holding h where h.user.uid = :uid", Holding.class)
                 .setParameter("uid", uid)
                 .getResultList();
     }
@@ -33,5 +33,20 @@ public class HoldingRepositoryImpl implements HoldingRepository {
     public List<Holding> findHoldingByUidStockId(Long uid, String stockId) {
         return em.createQuery("select h from Holding h join h.user where h.stockId =: stockId",Holding.class).
                 setParameter("stockId", stockId).getResultList();
+    }
+
+    @Override
+    public void deleteAll(Long uid) {
+        em.createQuery("delete from Holding h where h.user.uid = :uid")
+                .setParameter("uid", uid)
+                .executeUpdate();
+    }
+
+    @Override
+    public void deleteHoldingByUidStockCode(Long uid, String stockId) {
+        em.createQuery("delete from Holding h where h.user.uid =:uid and h.stockId =:stockId")
+                .setParameter("uid", uid)
+                .setParameter("stockId", stockId)
+                .executeUpdate();
     }
 }

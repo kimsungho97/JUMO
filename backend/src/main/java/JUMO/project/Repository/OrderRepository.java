@@ -9,4 +9,5 @@ public interface OrderRepository {
 
     public Order findById(Long id);
     public List<Order> findAllHistoryByUid(Long uid);
+    public void deleteAll(Long uid);
 }
