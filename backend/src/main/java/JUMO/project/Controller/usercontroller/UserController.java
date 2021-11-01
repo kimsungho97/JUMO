@@ -1,9 +1,12 @@
 package JUMO.project.Controller.usercontroller;
 
+import JUMO.project.Controller.HoldingInvestmentDTO;
 import JUMO.project.Controller.usercontroller.LoginResultDTO;
 import JUMO.project.Controller.usercontroller.SignupResultDTO;
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
+import JUMO.project.Service.HoldingService;
+import JUMO.project.Service.OrderService;
 import JUMO.project.Service.UserServiceImpl;
 import JUMO.project.springsecurity.JwtTokenProvider;
 import JUMO.project.springsecurity.LoginStatusManager;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,6 +35,7 @@ public class UserController {
     private final JwtTokenProvider jwtTokenProvider;
     // 로그인 상태 관리
     private final LoginStatusManager loginStatusManager;
+    private final HoldingService holdingService;
 
     @PostMapping("/login")
     public LoginResultDTO login(@RequestBody Map<String, String> user) {
@@ -102,5 +107,24 @@ public class UserController {
         String token = jwtTokenProvider.resolveToken(request);
         Long userUid = jwtTokenProvider.getUserUid(token);
         userService.reset(userUid);
+    }
+
+    @GetMapping("/totalasset")
+    public TotalAssetDTO totalAsset(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Long userUid = jwtTokenProvider.getUserUid(token);
+        String userId = jwtTokenProvider.getUserId(token);
+        List<HoldingInvestmentDTO> investmentDTOList = holdingService.findUserAllHoldingInfo(userUid);
+        long valuationLoss = 0L;
+        long totalAsset =  0L;
+        long totalPurchaseValue = 0L;
+        for (HoldingInvestmentDTO holdingInvestmentDTO : investmentDTOList){
+            valuationLoss += holdingInvestmentDTO.getValuationLoss().longValue();
+            totalAsset += holdingInvestmentDTO.getCurrentPrice() * holdingInvestmentDTO.getRemainingAmount();
+            totalPurchaseValue += holdingInvestmentDTO.getAveragePurchasePrice() * holdingInvestmentDTO.getRemainingAmount();
+        }
+        Double valuationLossRate = Double.parseDouble(Long.toString(valuationLoss)) / Double.parseDouble(Long.toString(totalPurchaseValue)) * 100;
+
+        return new TotalAssetDTO(userId, valuationLoss, valuationLossRate, totalAsset);
     }
 }
