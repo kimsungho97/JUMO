@@ -27,9 +27,10 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserServiceImpl userService;
+    // jwt token 조회, 발급
     private final JwtTokenProvider jwtTokenProvider;
+    // 로그인 상태 관리
     private final LoginStatusManager loginStatusManager;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
     public LoginResultDTO login(@RequestBody Map<String, String> user) {
@@ -91,5 +92,15 @@ public class UserController {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return new UserInfoDTO(false, null, null, "can't find userInfo");
         }
+    }
+
+    /**
+     * reset user's investment and money
+     */
+    @PostMapping("/resetuser")
+    public void resetUser(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Long userUid = jwtTokenProvider.getUserUid(token);
+        userService.reset(userUid);
     }
 }

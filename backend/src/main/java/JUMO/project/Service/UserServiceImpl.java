@@ -1,6 +1,8 @@
 package JUMO.project.Service;
 
 import JUMO.project.Entity.User;
+import JUMO.project.Repository.HoldingRepository;
+import JUMO.project.Repository.OrderRepository;
 import JUMO.project.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final HoldingRepository holdingRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -67,5 +71,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findById(username)
                 .orElseThrow(()->new UsernameNotFoundException(username + "has not found"));
+    }
+
+    @Override
+    public Optional<User> reset(Long userUid) {
+        orderRepository.deleteAll(userUid);
+        holdingRepository.deleteAll(userUid);
+        Optional<User> findUser = userRepository.findByUid(userUid);
+
+        User foundUser = findUser.get();
+        foundUser.setBalance(1000000L);
+
+        return Optional.of(foundUser);
     }
 }
