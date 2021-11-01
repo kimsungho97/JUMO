@@ -29,4 +29,11 @@ public class OrderRepositoryImpl implements OrderRepository{
         return em.createQuery("select o from Order o where o.user.uid = :uid", Order.class)
                 .setParameter("uid", uid).getResultList();
     }
+
+    @Override
+    public void deleteAll(Long uid) {
+        em.createQuery("delete from Order o where o.user.uid = :uid")
+                .setParameter("uid", uid)
+                .executeUpdate();
+    }
 }
