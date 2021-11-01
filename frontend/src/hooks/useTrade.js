@@ -17,3 +17,16 @@ export async function fetchTrade(type, stockName, stockCode, amount) {
     })).data
     return res;
 }
+
+
+export async function fetchCurPrice(stockCode) {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "GET",
+        url: `${url}/api/stockprice?stockId=${stockCode}`,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })).data.price
+    return res;
+}

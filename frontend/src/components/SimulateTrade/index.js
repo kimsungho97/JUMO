@@ -1,18 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 import { fetchChartList } from "../../hooks/useChart";
-import { fetchTrade } from "../../hooks/useTrade";
+import { fetchUserInfo } from "../../hooks/useMyInfo";
+import { fetchCurPrice, fetchTrade } from "../../hooks/useTrade";
+import { userAtom } from "../../store/user";
 import HighChart from "../Chart";
 
 import { AmountInput, Chart, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, ToggleBtn, Trade, TradeToggle } from "./style";
 
 export default function SimulateTrade() {
-    const [curStockName, setCurStockName] = useState("동화약품");
-    const [curStockCode, setCurStockCode] = useState("000020.KS");
+    const [userInfo, setUserInfo] = useRecoilState(userAtom);
+    const [curStockName, setCurStockName] = useState("");
+    const [curStockCode, setCurStockCode] = useState("");
     const [stockName, setStockName] = useState("");
     const [type, setType] = useState("buy");
     const [amount, setAmount] = useState(0);
-    const [total, setTotal] = useState(1);
-    const [currentPrice, setCurrentPrice] = useState(700000);
+    const [currentPrice, setCurrentPrice] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
     const [stockList, setStockList] = useState([]);
 
     useEffect(() => {
@@ -45,9 +49,12 @@ export default function SimulateTrade() {
                                     key={index}
                                     display={rowFiltered(stock.stockName, stockName)}
                                     value={stock.name}
-                                    onClick={(e) => {
+                                    onClick={async (e) => {
+                                        setCurrentPrice(await fetchCurPrice(stock.code));
                                         setCurStockName(stock.stockName);
                                         setCurStockCode(stock.code);
+                                        setAmount(0);
+                                        setTotalPrice(0);
                                     }
                                     }
                                 >
@@ -70,61 +77,72 @@ export default function SimulateTrade() {
                 <HighChart stockName={curStockName} />
             </Chart>
             
+            {
+                curStockName!==''?(
+                <Trade>
+                    <TradeToggle>
+                        <ToggleBtn
+                            color={type === "buy" ? "red" : "grey"}
+                            value={"buy"}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setType(e.target.value);
+                            }}
+                        >
+                            매수
+                        </ToggleBtn>
+                        <ToggleBtn
+                            color={type === "sell" ? "blue" : "grey"}
+                            value={"sell"}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                setType(e.target.value);
+                            }}
+                        >
+                            매도
+                        </ToggleBtn>
+                    </TradeToggle>
 
-            <Trade>
-                <TradeToggle>
-                    <ToggleBtn
-                        color={type==="buy"?"red":"grey"}
-                        value={"buy"}
-                        onClick={(e) => {
+                    <label>수량</label>
+                    <AmountInput
+                            type={"number"}
+                            value={amount}
+                            onChange={(e) => {
+                                if (e.target.value.length === 0) {
+                                    setAmount("");
+                                    setTotalPrice(0);
+                                }
+                                else {
+                                    setAmount(parseInt(e.target.value));
+                                    setTotalPrice(parseInt(e.target.value) * currentPrice)
+                                }
+                            }}
+                    />
+                
+                    <label>총액</label>
+                    <span>{totalPrice.toLocaleString("ko-KR")}</span>
+                    <OrderBtn
+                        onClick={async (e) => {
                             e.preventDefault();
-                            setType(e.target.value);
+                            const result = await fetchTrade(type, curStockName, curStockCode, amount);
+                            console.log(result);
+                            if (result.result === false) {
+                                alert(result.msg);
+                            }
+                            else {
+                                alert("거래가 체결되었습니다.");
+                                const userData = await fetchUserInfo();
+                                setUserInfo({ userId: userData.id, balance: userData.balance });
+                                setAmount(0);
+                            }
                         }}
                     >
-                        매수
-                    </ToggleBtn>
-                    <ToggleBtn
-                        color={type==="sell"?"blue":"grey"}
-                        value={"sell"}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setType(e.target.value);
-                        }}
-                    >
-                        매도
-                    </ToggleBtn>
-                </TradeToggle>
-
-                <label>수량</label>
-                <AmountInput
-                    type={"number"}
-                    value={amount}
-                    onChange={(e) => {
-                        setAmount(parseInt(e.target.value));
-                        setTotal(e.target.value * currentPrice)
-                    }}
-                />
+                        주문
+                    </OrderBtn>
                 
-                <label>총액</label>
-                <span>{total.toLocaleString("ko-KR")}</span>
-                <OrderBtn
-                    onClick={async (e) => {
-                        e.preventDefault();
-                        const result = await fetchTrade(type, curStockName, curStockCode, amount);
-                        console.log(result);
-                        if (result.result === false) {
-                            alert(result.msg);
-                        }
-                        else {
-                            alert("거래가 체결되었습니다.");
-                            setAmount(0);
-                        }
-                    }}
-                >
-                    주문
-                </OrderBtn>
-                
-            </Trade>
+                    </Trade>
+                    ):(<></>)
+            }
         </Inner>
     )
 

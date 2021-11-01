@@ -62,9 +62,9 @@ export default function SimulateMyInfo() {
                             </tr>
 
                             {
-                                holdings.map((holding) => {
+                                holdings.map((holding, index) => {
                                     return (
-                                        <tr>
+                                        <tr key={index}>
                                             <TableData>
                                                 {holding.name}
                                             </TableData>

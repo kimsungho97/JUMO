@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { fetchReset } from "../../hooks/useMyInfo";
+import { fetchReset, fetchUserInfo } from "../../hooks/useMyInfo";
 import { userAtom } from "../../store/user";
 import { Inner, MyInfoDiv, MyInfoRow } from "./style";
 
@@ -23,6 +23,10 @@ export default function MyPageContainer() {
                         if(result!==200){
                             alert("초기화 오류!");
                         }
+                        else {
+                            alert("초기화 완료!");
+                            const userData = await fetchUserInfo();
+                            setUserInfo({ userId: userData.id, balance: userData.balance });                        }
                     }}
                 >
                     초기화버튼^^
