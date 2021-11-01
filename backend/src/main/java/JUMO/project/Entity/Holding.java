@@ -67,6 +67,9 @@ public class Holding {
             throw new NotEnoughHoldingException("sell more than user have");
         }
         this.count -= count;
+        if (this.count == 0){
+            return;
+        }
         this.volume -= stockPrice*count;
         this.averagePrice = this.volume / this.count;
     }
