@@ -13,4 +13,5 @@ public interface HoldingRepository {
     public List<Holding> findByUserId(Long uid);
     public List<Holding> findHoldingByUidStockId(Long uid, String stockId);
     public void deleteAll(Long uid);
+    public void deleteHoldingByUidStockCode(Long Uid, String stockId);
 }

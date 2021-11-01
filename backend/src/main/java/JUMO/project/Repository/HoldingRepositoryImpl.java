@@ -41,4 +41,12 @@ public class HoldingRepositoryImpl implements HoldingRepository {
                 .setParameter("uid", uid)
                 .executeUpdate();
     }
+
+    @Override
+    public void deleteHoldingByUidStockCode(Long uid, String stockId) {
+        em.createQuery("delete from Holding h where h.user.uid =:uid and h.stockId =:stockId")
+                .setParameter("uid", uid)
+                .setParameter("stockId", stockId)
+                .executeUpdate();
+    }
 }
