@@ -90,10 +90,6 @@ public class OrderServiceImpl implements OrderService{
 
         user.addBalance(stockPrice*count);
 
-        // order 객체 생성 및 영속화
-        Order order = Order.createOrder(user, stockId, stockName, stockPrice, count);
-        order.changeTradeType(TradeType.SELL);
-        orderRepository.save(order);
 
         // 주문하는 주식 지갑 없으면 에러 발생
         List<Holding> holdings = holdingRepository.findHoldingByUidStockId(user.getUid(), stockId);
@@ -102,8 +98,11 @@ public class OrderServiceImpl implements OrderService{
         }
         // 지갑 존재하면 불러오기 및 지갑 갱신
         Holding holding = holdings.get(0);
-
         holding.subjectCalHolding(count, stockPrice);
+        // order 객체 생성 및 영속화
+        Order order = Order.createOrder(user, stockId, stockName, stockPrice, count);
+        order.changeTradeType(TradeType.SELL);
+        orderRepository.save(order);
     }
 
     public Long getStockPrice(String stockId){
