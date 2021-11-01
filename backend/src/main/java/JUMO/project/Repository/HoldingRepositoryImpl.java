@@ -23,7 +23,7 @@ public class HoldingRepositoryImpl implements HoldingRepository {
 
     @Override
     public List<Holding> findByUserId(Long uid) {
-        return em.createQuery("SELECT h from Holding h join fetch h.user where h.user.uid = :uid", Holding.class)
+        return em.createQuery("SELECT h from Holding h where h.user.uid = :uid", Holding.class)
                 .setParameter("uid", uid)
                 .getResultList();
     }
