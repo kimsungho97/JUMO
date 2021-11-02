@@ -8,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class HoldingInvestmentDTO {
     private String name;
-    private Double valuationLoss;
+    private Long valuationLoss;
     private Double yield;
     private Integer remainingAmount;
     private Long valuationAmount;
