@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { fetchHolding } from "../../hooks/useMyInfo";
+import { fetchHolding, fetchTotalAsset } from "../../hooks/useMyInfo";
 import { userAtom } from "../../store/user";
 import { Holding, HoldingInner, HoldingTable, Info, InfoInner, Inner, TableData, TableHeader, Title } from "./style";
 
 export default function SimulateMyInfo() {
     const [holdings, setHoldings] = useState([]);
     const userInfo = useRecoilValue(userAtom);
+    const [myAssets, setMyAssets] = useState({userId: userInfo.userId, valuationLoss:0, valuationLossRate: 0, valuationAmount: 0});
     
     useEffect(() => {
         async function getHoldings() {
             const holding = await fetchHolding(userInfo.userId);
+            const assets=await fetchTotalAsset();
             setHoldings(holding);
+            setMyAssets(assets);
         }
         getHoldings();
     }, [])
@@ -24,11 +27,10 @@ export default function SimulateMyInfo() {
             <Info>
                 <Title>내 정보</Title>
                 <InfoInner>
-                    <span>아이디 : ~~~</span>
-                    <span>순자산: ~~~</span>
-                    <span>손익: ~~~</span>
-                    <span>수익률: ~~~</span>
-                    <span>평가금액: ~~~</span>
+                    <span>아이디 : {myAssets.userId}</span>
+                    <span>손익: {myAssets.valuationLoss}</span>
+                    <span>수익률: {myAssets.valuationLossRate}</span>
+                    <span>평가금액: {myAssets.valuationAmount}</span>
                 </InfoInner>
             </Info>
 
