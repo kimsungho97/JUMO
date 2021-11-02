@@ -4,6 +4,7 @@ export const Inner = styled.div`
     display: flex;
     flex-direction: row;
     margin-left: 20px;
+    
 `
 
 

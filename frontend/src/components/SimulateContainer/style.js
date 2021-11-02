@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const Inner = styled.div`
+    position: fixed;
+    
+    
+    height: 100%;
+    width: 100%;
+    background-color: #e3e5ec;
+`
+
 export const TabBar = styled.div`
     width: 100%;
     height: 40px;
@@ -24,6 +33,10 @@ export const Tab = styled.div`
     margin-left: 10px;
     &:first-child{
         margin-left: 0px;
+    }
+
+    &:hover{
+        cursor: pointer;
     }
 `
 
