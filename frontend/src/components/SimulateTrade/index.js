@@ -1,15 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { fetchChartList } from "../../hooks/useChart";
+import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { fetchChartData, fetchChartList } from "../../hooks/useChart";
 import { fetchUserInfo } from "../../hooks/useMyInfo";
 import { fetchCurPrice, fetchTrade } from "../../hooks/useTrade";
 import { userAtom } from "../../store/user";
 import HighChart from "../Chart";
+import { config } from "../Chart/chartUtil";
 
-import { AmountInput, Chart, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, ToggleBtn, Trade, TradeToggle } from "./style";
+import { AmountInput, Chart, ChartInfo, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, ToggleBtn, Trade, TradeToggle } from "./style";
 
 export default function SimulateTrade() {
-    const [userInfo, setUserInfo] = useRecoilState(userAtom);
+    const setUserInfo = useSetRecoilState(userAtom);
     const [curStockName, setCurStockName] = useState("");
     const [curStockCode, setCurStockCode] = useState("");
     const [stockName, setStockName] = useState("");
@@ -18,65 +19,25 @@ export default function SimulateTrade() {
     const [currentPrice, setCurrentPrice] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [stockList, setStockList] = useState([]);
+    const [chartConfig, setChartConfig] = useState({});
 
     useEffect(() => {
         async function setStocks() {
             const stocks = await fetchChartList();
             setStockList(stocks);
         }
+
         setStocks();
-        document.addEventListener("click", candleColorChange);
-        candleColorChange();
-        
-        return () => {
-            document.removeEventListener("click", candleColorChange);
-        }
-    }, [])
+    }, [stockName])
 
     return (
         <Inner>
-            <ChartList>
-                <ChartListHead>
-                    <ChartListInput
-                        onChange={(e)=>setStockName(e.target.value)}
-                    />
-                </ChartListHead>
-                <ChartListGroup>
-                    {
-                        stockList.map((stock, index) => {
-                            return (
-                                <ChartListData
-                                    key={index}
-                                    display={rowFiltered(stock.stockName, stockName)}
-                                    value={stock.name}
-                                    onClick={async (e) => {
-                                        setCurrentPrice(await fetchCurPrice(stock.code));
-                                        setCurStockName(stock.stockName);
-                                        setCurStockCode(stock.code);
-                                        setAmount(0);
-                                        setTotalPrice(0);
-                                    }
-                                    }
-                                >
-                                    <ChartListName>
-                                        {stock.stockName}
-                                    </ChartListName>
-                                    <ChartListCode>
-                                        {stock.code}
-                                    </ChartListCode>
-                                </ChartListData>
-                            )
-                        })
-                    }
-                </ChartListGroup>
-            </ChartList>            
-
-            
             <Chart>
-                <ChartTitle>{curStockName}</ChartTitle>
-                <HighChart stockName={curStockName} />
-            </Chart>
-            
+                <ChartInfo>
+                    <ChartTitle>{curStockName}</ChartTitle>
+                    <ChartTitle>{currentPrice!==0?currentPrice.toLocaleString("ko-KR")+"원":""}</ChartTitle>
+                </ChartInfo>
+                <HighChart configs={chartConfig} />
             {
                 curStockName!==''?(
                 <Trade>
@@ -143,25 +104,51 @@ export default function SimulateTrade() {
                     </Trade>
                     ):(<></>)
             }
+            </Chart>
+            
+            <ChartList>
+                <ChartListHead>
+                    <ChartListInput
+                        onChange={(e)=>setStockName(e.target.value)}
+                    />
+                </ChartListHead>
+                <ChartListGroup>
+                    {
+                        stockList.map((stock, index) => {
+                            return (
+                                <ChartListData
+                                    key={index}
+                                    display={rowFiltered(stock.stockName, stockName)}
+                                    value={stock.name}
+                                    color={(curStockName===stock.stockName)}
+                                    onClick={async (e) => {
+                                        setCurrentPrice(await fetchCurPrice(stock.code));
+                                        setCurStockName(stock.stockName);
+                                        setCurStockCode(stock.code);
+                                        setAmount(0);
+                                        setTotalPrice(0);
+                                        const chartData=await fetchChartData(stock.stockName);
+                                        setChartConfig(config(chartData));
+                                    }
+                                    }
+                                >
+                                    <ChartListName>
+                                        {stock.stockName}
+                                    </ChartListName>
+                                    <ChartListCode>
+                                        {stock.code}
+                                    </ChartListCode>
+                                </ChartListData>
+                            )
+                        })
+                    }
+                </ChartListGroup>
+            </ChartList>            
+
         </Inner>
     )
 
 }
-
-//차크 캔들 색깔 변경
-function candleColorChange() {
-    const candleDown = document.querySelectorAll(".highcharts-point-up");
-    const candleUp = document.querySelectorAll(".highcharts-point-down");
-
-    candleDown.forEach((value) => {
-        value.style.fill = "#ff3333";
-    })
-
-    candleUp.forEach((value) => {
-        value.style.fill = "#0000ff";
-    })
-}
-
 
 const rowFiltered = (stockName, name) => {
     if (stockName.indexOf(name) === -1)

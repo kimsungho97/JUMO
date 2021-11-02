@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SimulateHistory from "../SimulateHistory";
 import SimulateMyInfo from "../SimulateMyInfo";
 import SimulateTrade from "../SimulateTrade";
-import { TabBar, Tab, TabSpan } from "./style";
+import { TabBar, Tab, TabSpan, Inner } from "./style";
 
 const tabList = {
     "myInfo": <SimulateMyInfo />,
@@ -14,10 +14,10 @@ export default function SimulateContainer({ history }) {
     const [tabMenu, setTabMenu] = useState("myInfo");
 
     return (
-        <>
+        <Inner>
             <TabBar>
                 <Tab
-                    color={(tabMenu==="myInfo").toString()}
+                    color={(tabMenu==="myInfo")}
                     onClick={() => { setTabMenu("myInfo") }}
                 >
                     <TabSpan>
@@ -25,7 +25,7 @@ export default function SimulateContainer({ history }) {
                     </TabSpan>
                 </Tab>
                 <Tab
-                    color={(tabMenu==="history").toString()}
+                    color={(tabMenu==="history")}
                     onClick={() => { setTabMenu("history") }}
                 >
                     <TabSpan>
@@ -33,7 +33,7 @@ export default function SimulateContainer({ history }) {
                     </TabSpan>
                 </Tab>
                 <Tab
-                    color={(tabMenu==="trade").toString()}
+                    color={(tabMenu==="trade")}
                     onClick={() => { setTabMenu("trade") }}
                 >
                     <TabSpan>
@@ -43,7 +43,7 @@ export default function SimulateContainer({ history }) {
             </TabBar>
             
             {tabList[tabMenu]}
-        </>
+        </Inner>
     )
 
 }

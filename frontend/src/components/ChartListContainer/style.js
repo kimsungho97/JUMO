@@ -52,3 +52,9 @@ export const StockTableData = styled.td`
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 `
+
+export const ChartLinker = styled.a`
+    &:hover{
+        cursor: pointer;
+    }
+`

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { fetchChartList } from "../../hooks/useChart";
 import LinkTo from "../../hooks/useLink";
-import { SearchBar, SearchBarInput, SearchBarlbl, StockTable, StockTableData, StockTableHeader, StockTableRow } from "./style";
+import { ChartLinker, SearchBar, SearchBarInput, SearchBarlbl, StockTable, StockTableData, StockTableHeader, StockTableRow } from "./style";
 
 export default function ChartListContainer({ history }) {
     const [stockName, setStockName] = useState('');
@@ -58,9 +58,9 @@ export default function ChartListContainer({ history }) {
                                         {stock.code}
                                     </StockTableData>
                                     <StockTableData>
-                                        <a onClick={(e)=>LinkTo(e,history,`/chart?stockName=${stock.stockName}&stockCode=${stock.code}`)}>
+                                        <ChartLinker onClick={(e)=>LinkTo(e,history,`/chart?stockName=${stock.stockName}&stockCode=${stock.code}`)}>
                                             차트보기
-                                        </a>
+                                        </ChartLinker>
                                     </StockTableData>
                                 </StockTableRow>
                             )
