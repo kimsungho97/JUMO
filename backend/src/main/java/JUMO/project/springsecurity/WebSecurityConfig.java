@@ -1,8 +1,9 @@
 package JUMO.project.springsecurity;
 
 import JUMO.project.Repository.UserRepository;
-import JUMO.project.Service.UserService;
 import JUMO.project.Service.UserServiceImpl;
+import JUMO.project.springsecurity.deprecated.CustomAuthFailureHandler;
+import JUMO.project.springsecurity.deprecated.CustomUrlAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
