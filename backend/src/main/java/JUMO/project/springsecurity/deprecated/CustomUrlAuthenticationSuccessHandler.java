@@ -1,7 +1,8 @@
-package JUMO.project.springsecurity;
+package JUMO.project.springsecurity.deprecated;
 
 import JUMO.project.Entity.User;
 import JUMO.project.Repository.UserRepository;
+import JUMO.project.springsecurity.JsonResultDTO;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
