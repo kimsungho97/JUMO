@@ -7,13 +7,13 @@ export const Inner = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    background-color: #B7E6EA;
+    background-color: #dee1e7;
 `
 
 export const ChartView = styled.div`
     width: 80%;
-    min-width: 800px;
-    height: 30%;
+    
+    
     position: relative;
     top: 50px;
     border-radius: 10px;
@@ -72,10 +72,11 @@ export const PredictionSpan = styled.span`
 export const PredictionResult = styled.label`
     width: 100px;
     height: 35px;
+    
     border-radius: 9px;
     font-size: 30px;
     text-align: center;
-    font-weight: 1000;
+    font-weight: bold;
     position: absolute;
     left: 400px;
     background-color:${props=>props.color};

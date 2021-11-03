@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import HighStock from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
-import { fetchChartData } from '../../hooks/useChart';
 
 
 export default function HighChart({ configs }) {
