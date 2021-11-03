@@ -1,5 +1,5 @@
-import { BrowserRouter, Route } from "react-router-dom";
-import { ForbiddenPage } from "./pages";
+import { Route } from "react-router-dom";
+import { Login } from "./pages";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "./store/user";
 
@@ -13,7 +13,7 @@ export const RouteIf = ({component: Component, ...rest }) => {
             render={
                 props => {
                     if (user.userId === undefined) {
-                        return <ForbiddenPage/>
+                        return <Login/>
                     }
 
                     if (Component) {

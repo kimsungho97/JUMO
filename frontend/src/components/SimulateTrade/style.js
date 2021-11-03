@@ -7,9 +7,10 @@ export const Inner = styled.div`
     justify-content: space-around;
     width: 100%;
     height: 100%;
+    border: 2px solid #fff;
     flex-direction: row;
 
-    margin-top: 20px;
+    
     margin-left: 20px;
     
 `
@@ -25,12 +26,13 @@ export const ChartInfo = styled.div`
 
 export const ChartList = styled.div`
     position: relative;
+    padding: 7px;
     display: flex;
     right: 40px;
     flex-direction: column;
     justify-content: start;
     width: 200px;
-    height: 100%;
+    height: 80%;
     margin-right: 20px;
     border-radius: 10px;
     background-color: #fff;
@@ -53,10 +55,11 @@ export const ChartListInput = styled.input`
     width: 100%;
     height: 40px;
     margin: 0;
-    padding: 0;
+    padding-left: 3px;
     background-color: #fff;
-    border: 0;
     line-height: 26px;
+    border: 1px solid #d0d0d5;
+    border-radius: 10px;
     color: #2b2b2b;
     font-weight: 700;
     font-family: Dotum,Noto Sans KR,sans-serif;
@@ -98,10 +101,10 @@ export const ChartListGroup = styled.div`
         background-color: black;
     }
     &::-webkit-scrollbar-thumb {
-        background-color: #2f3542;
+        background-color: royalblue;
     }
     &::-webkit-scrollbar-track {
-        background-color: grey;
+        background-color: #BFDFFF;
     }
   }
 `
@@ -111,7 +114,7 @@ export const ChartListData = styled.div`
     background-color: ${props=> props.color?"grey":"none"};
     flex-direction: column;
     justify-content: space-around;
-    border-top: 1px solid grey;
+    
     border-bottom: 1px solid grey;
     &:hover{
         background-color: grey;
@@ -144,7 +147,9 @@ export const ChartTitle = styled.div`
     text-align: left;
     padding-top: 10px;
     padding-left: 10px;
-    font-size: 20px;
+    font-weight: ${props=>props.fontWeight};
+    font-size: ${props => props.fontSize}px;
+    font-height: 100%;
     font-family: Noto Sans KR,sans-serif;
 `
 
@@ -155,16 +160,51 @@ export const Trade = styled.div`
     width: 400px;
     height: 100%;
     text-align: center;
+    align-items: center;
     background-color: #fff;
 `
 
 export const AmountInput = styled.input`
-
+    padding: 0 14px;
+    padding-right: 20px;
+    border: 1px solid #dfe0e5;
+    border-radius: 0.1em 0 0 0.1em;
+    line-height: 36px;
+    color: #2b2b2b;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-align: right;
+    -webkit-writing-mode: horizontal-tb !important;
+    font-style: ;
+    font-variant-ligatures: ;
+    font-variant-caps: ;
+    font-variant-numeric: ;
+    font-variant-east-asian: ;
+    font-weight: ;
+    font-stretch: ;
+    font-size: ;
+    font-family: ;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    appearance: auto;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+}
 `
 
 export const TradeToggle = styled.div`
-    width: 200px;
-    height: 80px;
+    width: 100%;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
 `
@@ -172,16 +212,43 @@ export const TradeToggle = styled.div`
 export const ToggleBtn = styled.button`
     position: relative;
     width: 50%;
-    height: 100%;
-    background-color: ${props => props.color};
+    height: 40px;
+    
+    background-color: #fff;
+    border: none;
+    border-bottom: 3px ${props => props.color} solid;
+    color: ${props => props.color};
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Noto Sans KR,sans-serif;
+    text-align: center;
     &:hover{
         cursor: pointer;
     }
 `
 
-export const OrderBtn = styled.button`
-    width: 50px;
+export const OrderRow = styled.div`
+    position: relative;
+    width: 100%;
     height: 50px;
+    display: flex;
+    padding: 7px;
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+export const OrderBtn = styled.button`
+    border: 0;
+    background-color: #115dcb;
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: Noto Sans KR,sans-serif;
+    text-align: center;
+    overflow: hidden;
     &:hover{
         cursor: pointer;
     }
