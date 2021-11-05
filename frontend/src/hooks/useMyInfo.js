@@ -48,3 +48,15 @@ export async function fetchUserInfo() {
     })).data;
     return res;
 }
+
+export async function fetchTotalAsset() {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "GET",
+        url: `${url}/api/totalasset`,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })).data;
+    return res;
+}
