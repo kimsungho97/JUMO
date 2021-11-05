@@ -5,22 +5,40 @@ export const Inner = styled.div`
     display: flex;
     overflow: hidden;
     justify-content: space-around;
-    width: 100%;
-    height: 100%;
-    border: 2px solid #fff;
+    width: 80%;
+    min-width: 1200px;
+    height: 80%;
+    border: none;
     flex-direction: row;
+`
 
-    
-    margin-left: 20px;
-    
+export const ChartHeader = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 300px;
+`
+export const ChartGroup = styled.div`
+    position: relative;
+    display: flex;
+    padding: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1000px;
+    height: 300px;
+    margin: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
 `
 
 export const ChartInfo = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100px;
+    width: 30%;
+    height: 100%;
     align-items: left;
 `
 
@@ -33,9 +51,11 @@ export const ChartList = styled.div`
     justify-content: start;
     width: 200px;
     height: 80%;
+    margin: 10px;
     margin-right: 20px;
-    border-radius: 10px;
+
     background-color: #fff;
+
 `
 
 export const ChartListHead = styled.div`
@@ -134,7 +154,7 @@ export const ChartListCode = styled.span`
 export const Chart = styled.div`
     position: relative;
     width: 80%;
-    min-width: 700px;
+    min-width: 1000px;
     height: 100%;
     text-align: center;
     margin-left: 3%;
@@ -142,11 +162,11 @@ export const Chart = styled.div`
 `
 
 export const ChartTitle = styled.div`
-    height: 50px;
-    width: 70%;
-    text-align: left;
+    
+    width: ${props=>props.width}px;
     padding-top: 10px;
     padding-left: 10px;
+    text-align: left;
     font-weight: ${props=>props.fontWeight};
     font-size: ${props => props.fontSize}px;
     font-height: 100%;
@@ -157,11 +177,12 @@ export const Trade = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 300px;
     height: 100%;
     text-align: center;
     align-items: center;
     background-color: #fff;
+    margin: 10px;
 `
 
 export const AmountInput = styled.input`
@@ -241,8 +262,8 @@ export const OrderBtn = styled.button`
     border: 0;
     background-color: #115dcb;
     width: 100%;
-    height: 44px;
-    line-height: 44px;
+    height: 35px;
+    line-height: 35px;
     color: #fff;
     font-size: 14px;
     font-weight: 700;
@@ -253,4 +274,52 @@ export const OrderBtn = styled.button`
         cursor: pointer;
     }
     
+`
+
+export const Prediction = styled.div`
+    position: relative;
+    width: 550px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+`
+
+export const PredictionDiv = styled.div`
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+`
+
+export const PredictionSpan = styled.span`
+    text-align: left;
+    font-weight: 500;
+    font-size: 40px;
+    font-height: 100%;
+    font-family: Noto Sans KR,sans-serif;
+`
+
+export const PredictionResult = styled.label`
+    text-align: left;
+    font-weight: 700;
+    font-size: 35px;
+    padding: 5px;
+    height: 50px;
+    font-height: 100%;
+    font-family: Noto Sans KR,sans-serif;
+    color: ${props => props.color};
+`
+
+export const PredictionSpec = styled.div`
+    height: 100px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 20px;
+    padding: 5px;
+    font-height: 150%;
+    font-family: Noto Sans KR,sans-serif;
+    color: grey;
 `
