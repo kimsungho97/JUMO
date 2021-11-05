@@ -5,29 +5,20 @@ export const Inner = styled.div`
     display: flex;
     flex-direction: row;
     margin-left: 20px;
+    width: 800px;
+    margin: 20px;
 `
 
 
-export const History = styled.div`
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
-    height: 80%;
-    width: 70%;
-    min-height: 500px;
-    min-width: 300px;
-    border: 1px #fff solid;
-`
 export const HistoryInner = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
 
-    height: 80%;
+    height: 100%;
     width: 100%;
-    min-height: 500px;
-    border: 1px #fff solid;
+    margin: 10px;
+    background-color: #fff;
 `
 
 

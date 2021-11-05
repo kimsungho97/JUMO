@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { fetchHolding, fetchTotalAsset } from "../../hooks/useMyInfo";
 import { Loading } from "../../pages";
 import { userAtom } from "../../store/user";
-import { Holding, HoldingInner, HoldingTable, Info, InfoInner, Inner, TableData, TableHeader, Title } from "./style";
+import { Holding, HoldingInner, HoldingTable, Info, InfoContent, InfoInner, InfoRow, InfoSpan, Inner, TableData, TableHeader, Title } from "./style";
 
 export default function SimulateMyInfo() {
     const [holdings, setHoldings] = useState([]);
@@ -35,10 +35,45 @@ export default function SimulateMyInfo() {
                 <Info>
                     <Title>내 정보</Title>
                     <InfoInner>
-                        <span>아이디 : {myAssets.userId}</span>
-                        <span>손익: {myAssets.valuationLoss.toLocaleString("ko-KR")}</span>
-                        <span>수익률: {myAssets.valuationLossRate.toFixed(2)}%</span>
-                        <span>평가금액: {myAssets.valuationAmount.toLocaleString("ko-KR")}</span>
+                        <InfoRow>
+                            <InfoSpan>아이디</InfoSpan>
+                            <InfoContent>{myAssets.userId}</InfoContent>
+                        </InfoRow>
+                        <InfoRow>
+                            <InfoSpan>잔액</InfoSpan>
+                            <InfoContent>{userInfo.balance.toLocaleString("ko-KR")}</InfoContent>
+                        </InfoRow>
+                        
+                        <InfoRow>
+                            <InfoSpan>손익</InfoSpan>
+                            <InfoContent
+                                color={myAssets.valuationLoss < 0 ? "#d80e35" : "#115dcb"}
+                            >
+                                {myAssets.valuationLoss.toLocaleString("ko-KR")}
+                            </InfoContent>
+                        </InfoRow>
+                        <InfoRow>
+                            <InfoSpan>수익률</InfoSpan>
+                            <InfoContent
+                                color={myAssets.valuationLossRate < 0 ? "#d80e35" : "#115dcb"}
+                            >
+                                {myAssets.valuationLossRate.toFixed(2)}%
+                            </InfoContent>
+                        </InfoRow>
+                        <InfoRow>
+                            <InfoSpan>평가금액</InfoSpan>
+                            <InfoContent
+                                color={myAssets.valuationAmount < 0 ? "#d80e35" : "#115dcb"}
+                            >
+                                {myAssets.valuationAmount.toLocaleString("ko-KR")}
+                            </InfoContent>
+                        </InfoRow>
+                        <InfoRow>
+                            <InfoSpan>보유자산</InfoSpan>
+                            <InfoContent>
+                                {(myAssets.valuationAmount+userInfo.balance).toLocaleString("ko-KR")}
+                            </InfoContent>
+                        </InfoRow>
                     </InfoInner>
                 </Info>
 
