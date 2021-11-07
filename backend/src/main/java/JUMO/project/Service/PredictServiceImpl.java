@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Service
 public class PredictServiceImpl implements PredictService{
 
-    private final String predictURL = "http://127.0.0.1:5000";
+    private final String predictURL = "http://localhost:5000";
 
     @Override
     public ArrayList<String> getRecommend(String name) {
