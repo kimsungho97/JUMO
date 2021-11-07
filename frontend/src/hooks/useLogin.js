@@ -30,3 +30,20 @@ export async function fetchLogout(id) {
     })).data;
     return res;
 }
+
+
+export async function fetchSignup(id,password) {
+    const url = process.env.REACT_APP_BE_HOST;
+    const res = (await axios({
+        method: "POST",
+        url: `${url}/api/signup`,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        data: {
+            id,
+            password
+        }
+    })).data;
+    return res;
+}
