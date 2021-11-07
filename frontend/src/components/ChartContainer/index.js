@@ -1,80 +1,79 @@
 import React, {useEffect, useState} from "react";
-import { fetchPrediction } from "../../hooks/useChart";
+import { fetchChartData, fetchPrediction } from "../../hooks/useChart";
+import { Loading } from "../../pages";
 import HighChart from "../Chart";
-import { ChartView, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
+import { config } from "../Chart/chartUtil";
+import { ChartView, Inner, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
 
 export default function ChartContainer() {
-    const stockName = new URLSearchParams(window.location.search).get("stockName");
-    const stockCode = new URLSearchParams(window.location.search).get("stockCode");
+    const searchParmas = new URLSearchParams(window.location.search);
+    const stockName = searchParmas.get("stockName");
+    const stockCode = searchParmas.get("stockCode");
 
-    const [longResult,setLongReseult] = useState("");
-    const [shortResult,setShortReseult] = useState("");
-
+    const [chartConfig, setChartConfig] = useState({});
+    const [longResult, setLongResult] = useState("");
+    const [shortResult, setShortResult] = useState("");
+    const [loading, setLoading] = useState(true);
 
     
     useEffect(() => {
         async function getPredictions(stockName) {
+            
             const result = await fetchPrediction(stockName);
-            setLongReseult(result[0]);
-            setShortReseult(result[1]);
+            const chartData = await fetchChartData(stockName);
+            
+            setLongResult(result[0]);
+            setShortResult(result[1]);
+            setChartConfig(config(chartData));
+            setLoading(false);
         }
+
         getPredictions(stockName);
-
-        document.addEventListener("click", candleColorChange);
-        candleColorChange();
-
-        return () => {
-            document.removeEventListener("click", candleColorChange);
-        }
     }, []);
 
-   
-    return (
-        <>
-            <PredictionInfo>
-                <PredictionTitle>
-                    <Predictionlbl
-                        fontSize={50}
-                        fontWeight={1200}
-                    >
-                        {stockName}
-                    </Predictionlbl>
-                    <Predictionlbl
-                        fontSize={32}
-                        fontWeight={400}
-                    >
-                        {stockCode}
-                    </Predictionlbl>
+    if (loading)
+        return <Loading />
+    else
+        return (
+            <Inner>
+                <PredictionInfo>
+                    <PredictionTitle>
+                        <Predictionlbl
+                            fontSize={50}
+                            fontWeight={1200}
+                        >
+                            {stockName}
+                        </Predictionlbl>
+                        <Predictionlbl
+                            fontSize={32}
+                            fontWeight={400}
+                        >
+                            {stockCode}
+                        </Predictionlbl>
 
-                    <PredictionDiv>
-                        <PredictionSpan>Short Term Prediction</PredictionSpan>
-                        <PredictionResult>{shortResult}</PredictionResult>
-                    </PredictionDiv>
+                        <PredictionDiv>
+                            <PredictionSpan>Short Term Prediction</PredictionSpan>
+                            <PredictionResult
+                                color={shortResult === "SELL" ? "#d80e35" : "#115dcb"}
+                            >
+                                {shortResult}
+                            </PredictionResult>
+                        </PredictionDiv>
 
-                    <PredictionDiv>
-                        <PredictionSpan>Long Term Prediction</PredictionSpan>
-                        <PredictionResult>{longResult}</PredictionResult>
-                    </PredictionDiv>
-                </PredictionTitle>
-            </PredictionInfo>
-            <ChartView>
-                <HighChart
-                    stockName={stockName} />
-            </ChartView>
-        </>
-    )
-}
-
-//차크 캔들 색깔 변경
-function candleColorChange() {
-    const candleDown = document.querySelectorAll(".highcharts-point-up");
-    const candleUp = document.querySelectorAll(".highcharts-point-down");
-
-    candleDown.forEach((value) => {
-        value.style.fill = "#ff3333";
-    })
-
-    candleUp.forEach((value) => {
-        value.style.fill = "#0000ff";
-    })
+                        <PredictionDiv>
+                            <PredictionSpan>Long Term Prediction</PredictionSpan>
+                            <PredictionResult
+                                color={longResult === "SELL" ? "#d80e35" : "#115dcb"}
+                            >
+                                {longResult}
+                            </PredictionResult>
+                        </PredictionDiv>
+                    </PredictionTitle>
+                </PredictionInfo>
+                <ChartView>
+                    <HighChart
+                        configs={chartConfig} />
+                </ChartView>
+            </Inner>
+        )
 }

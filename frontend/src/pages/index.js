@@ -5,4 +5,4 @@ export { default as ChartList } from "./chartList";
 export { default as Chart } from "./chart";
 export { default as MyPage } from "./mypage";
 export { default as Simulate } from "./simulate";
-export { default as ForbiddenPage } from "./forbidden";
+export { default as Loading } from "./loading";

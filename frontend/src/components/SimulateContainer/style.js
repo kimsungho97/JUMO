@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export const Inner = styled.div`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    min-width: 1800px;
+    background-color: #e3e5ec;
+`
+
 export const TabBar = styled.div`
     width: 100%;
     height: 40px;
@@ -15,15 +23,21 @@ export const Tab = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 100px;
+    width: 150px;
     height: 100%;
-    background-color: ${props=>props.color?"royalblue":"#97BEF1"};
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    font-family: Noto Sans KR,sans-serif;
+    text-align: center;
+    color: ${props=>props.color?"royalblue":"grey"};
+    border-bottom: 3px solid ${props=>props.color?"royalblue":"grey"};
     align-items: center;
-    margin-left: 10px;
     &:first-child{
         margin-left: 0px;
+    }
+
+    &:hover{
+        cursor: pointer;
     }
 `
 

@@ -1,6 +1,26 @@
 import styled from "styled-components";
 
+
+
+export const Outer = styled.div`
+    width: 100%;
+    min-width: 1000px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+`
+
+export const Inner = styled.div`
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`
 export const SearchBar = styled.div`
+    position: relative;
+    width: 100%;
     margin-top:20px;
     margin-left:20px;
     font-family: 'Nanum Gothic';
@@ -8,19 +28,20 @@ export const SearchBar = styled.div`
     font-weight: 400;
 `
 
-export const SearchBarlbl = styled.label`
+export const SearchBarlbl = styled.span`
     width: 50px;
     height: 20px;
     margin: 10px 7px 10px 10px;
 `
 
 export const SearchBarInput = styled.input`
+    width: 200px;
     font-family: 'Nanum Gothic';
     font-size: 20px;
     font-weight: 400;
 `
 export const StockTable = styled.table`
-    position: absolute;
+    position: relative;
     margin-top: 10px;
     margin-left: 50px;
     border-collapse: collapse;
@@ -51,4 +72,10 @@ export const StockTableData = styled.td`
     vertical-align: top;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
+`
+
+export const ChartLinker = styled.a`
+    &:hover{
+        cursor: pointer;
+    }
 `

@@ -4,6 +4,9 @@ export const Inner = styled.div`
     display: flex;
     flex-direction: row;
     margin-left: 20px;
+    justify-content: space-between;
+    width: 70%;
+    min-width: 1000px;
 `
 
 
@@ -12,11 +15,13 @@ export const Info = styled.div`
     flex-direction: column;
     position: relative;
 
-    height: 80%;
-    width: 20%;
-    min-height: 500px;
+    height: 100%;
+    width: 30%;
     min-width: 300px;
-    border: 1px #fff solid;
+    background-color: #fff;
+    margin: 10px;
+    border-top: 1px;
+    solid #f1f1f4;
 `
 
 
@@ -26,30 +31,50 @@ export const InfoInner = styled.div`
     position: relative;
     height: 80%;
     width: 100%;
-    min-height: 500px;
-    border: 1px #fff solid;
+    
+`
+
+export const InfoRow = styled.div`
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    height: 30px;
+    width: 90%;
+    margin: 10px;
+    padding: 10px;
+`
+
+export const InfoSpan = styled.span`
+    font-size: 20px;
+    color: #666;
+`
+export const InfoContent = styled.span`
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 20px;
+    color: ${props=>props.color===undefined?"#000":props.color}
 `
 
 export const Holding = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
+    border-top: 1px;
+    solid #f1f1f4;
+    
 
-    height: 80%;
-    width: 70%;
-    min-height: 500px;
-    min-width: 300px;
-    border: 1px #fff solid;
+    background-color: #fff;
+    margin: 10px;
 `
 export const HoldingInner = styled.div`
     display: flex;
     flex-direction: column;
     position: relative;
 
-    height: 80%;
+    height: 100%;
     width: 100%;
-    min-height: 500px;
-    border: 1px #fff solid;
 `
 
 
@@ -58,7 +83,6 @@ export const HoldingTable = styled.table`
     flex-direction: column;
     position: relative;
 
-    height: 80%;
     width: 100%;
      
     
@@ -83,9 +107,14 @@ export const TableHeader = styled.th`
 export const Title = styled.div`
     position: relative;
     width: 100%;
-    heigth: 50px;
-    background-color: grey;
+    heigth: 60px;
+    font-size: 20px;
+    padding: 10px;
     text-align: center;
+    background-color:#f9fafc;
+    font-weight: 700;
+    clear: both;
+    font-family: Noto Sans KR,sans-serif,AppleSDGothicNeo-Regular,Malgun Gothic,Dotum;
 `
 
 export const TableData = styled.td`
