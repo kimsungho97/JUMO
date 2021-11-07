@@ -123,7 +123,13 @@ public class UserController {
             totalAsset += holdingInvestmentDTO.getCurrentPrice() * holdingInvestmentDTO.getRemainingAmount();
             totalPurchaseValue += holdingInvestmentDTO.getAveragePurchasePrice() * holdingInvestmentDTO.getRemainingAmount();
         }
-        Double valuationLossRate = Double.parseDouble(Long.toString(valuationLoss)) / Double.parseDouble(Long.toString(totalPurchaseValue)) * 100;
+
+        Double valuationLossRate = 0.0;
+
+        if (valuationLoss != 0){
+            valuationLossRate = Double.parseDouble(Long.toString(valuationLoss)) / Double.parseDouble(Long.toString(totalPurchaseValue)) * 100;
+        }
+
 
         return new TotalAssetDTO(userId, valuationLoss, valuationLossRate, totalAsset);
     }
