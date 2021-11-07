@@ -69,9 +69,7 @@ public class OrderServiceImpl implements OrderService{
         }
         // 지갑 존재하면 불러오기 및 지갑 갱신
         Holding holding = holdings.get(0);
-
         holding.addCalHolding(count, stockPrice);
-
     }
 
 
