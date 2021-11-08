@@ -9,7 +9,7 @@ def get_cursor():
         db=pymysql.connect(
             user="jumo",
             passwd='jumo2021@!@#$',
-            host="192.168.0.111",
+            host="127.0.0.1",
             port=3306,
             db="jumo",
             charset="utf8"
