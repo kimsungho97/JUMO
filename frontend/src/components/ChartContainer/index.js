@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { fetchChartData, fetchPrediction } from "../../hooks/useChart";
 import { Loading } from "../../pages";
-import HighChart from "../Chart";
+import {HighChart} from "../Chart";
 import { config } from "../Chart/chartUtil";
 import { ChartView, Inner, PredictionDiv, PredictionInfo, Predictionlbl, PredictionResult, PredictionSpan, PredictionTitle } from "./style";
 
