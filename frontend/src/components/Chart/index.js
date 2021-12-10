@@ -3,17 +3,17 @@ import HighStock from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
 
 
-export default function HighChart({ configs }) {
+export const HighChart = React.memo(function ({ configs, name }) {
     const [key, setKey] = useState(0);
     useEffect(() => {
         async function rerender(){
             setTimeout(() => {
-                setKey(key + 1);
+                setKey(name);
             }, 0);
         }
         
         rerender();
-    }, [configs]);
+    }, [name]);
     return (
         <HighchartsReact
                 key={key}
@@ -23,4 +23,4 @@ export default function HighChart({ configs }) {
             />
         
     )
-}
+},(prevProps,nextProps)=>prevProps.name===nextProps.name);

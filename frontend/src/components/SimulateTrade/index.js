@@ -5,7 +5,7 @@ import { fetchUserInfo } from "../../hooks/useMyInfo";
 import { fetchCurPrice, fetchTrade } from "../../hooks/useTrade";
 import { Loading } from "../../pages";
 import { userAtom } from "../../store/user";
-import HighChart from "../Chart";
+import {HighChart} from "../Chart";
 import { config } from "../Chart/chartUtil";
 
 import { AmountInput, Chart, ChartGroup, ChartHeader, ChartInfo, ChartList, ChartListCode, ChartListData, ChartListGroup, ChartListHead, ChartListInput, ChartListName, ChartTitle, Inner, OrderBtn, OrderRow, Prediction, PredictionDiv, PredictionResult, PredictionSpan, PredictionSpec, ToggleBtn, Trade, TradeToggle } from "./style";
@@ -42,7 +42,7 @@ export default function SimulateTrade() {
         }
 
         setStocks();
-    }, [stockName])
+    }, [])
 
     if (loading)
         return <Loading />
@@ -183,7 +183,7 @@ export default function SimulateTrade() {
                         }
                     </ChartHeader>
                     <div style={{ margin: "10px",marginTop: "20px" }}>
-                        <HighChart configs={chartConfig} />
+                        <HighChart configs={chartConfig} name={curStockName}/>
                     </div>
                 </Chart>
             
@@ -191,7 +191,10 @@ export default function SimulateTrade() {
                     <ChartListHead>
                         <ChartListInput
                             placeholder={"종목명 입력"}
-                            onChange={(e) => setStockName(e.target.value)}
+                            onChange={(e) => {
+                                e.preventDefault();
+                                setStockName(e.target.value);
+                            }}
                         />
                     </ChartListHead>
                     <ChartListGroup>
